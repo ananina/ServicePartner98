@@ -1,0 +1,12 @@
+body{
+    background-color: #1b6d85;
+}
+input.form-control{
+    width: 250px;
+}
+.input-group{
+    width: 250px;
+}
+select.form-control{
+    width: 350px;
+}
