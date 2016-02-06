@@ -46,22 +46,23 @@ $(document).ready(function(){
 
     $("select[name=id_client]").val('0');
     $("select[name=id_client]").change(function() {
-        loadData($(this).val());
+        var id = $(this).val();
+        loadData('clients', 'id_client', id);
     });
 
-    function loadData($id){
-        console.log($id);
+    function loadData(table, id_name, id){
+        console.log(table, id_name, id);
         $.ajax({
             type: "POST",
             url: "/ServicePartner98/model/ajax.php",
             dataType: 'json',
-            data: {id_client: $id},
+            data: {table : table, id_name : id_name, id: id},
             success: function (data) {
                 console.log(data);
-                console.log();
-                console.log(data[0]['tel']);
-                $('#address_client').val(data[0]['address']);
-                $('#tel_client').val(data[0]['tel']);
+                console.log(data['address']);
+                console.log(data['tel']);
+                $('#address_client').val(data['address']);
+                $('#tel_client').val(data['tel']);
             }
         });
     }
