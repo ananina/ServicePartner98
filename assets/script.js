@@ -51,18 +51,17 @@ $(document).ready(function(){
     });
 
     function loadData(table, id_name, id){
-        console.log(table, id_name, id);
         $.ajax({
             type: "POST",
             url: "/ServicePartner98/model/ajax.php",
             dataType: 'json',
             data: {table : table, id_name : id_name, id: id},
             success: function (data) {
-                console.log(data);
-                console.log(data['address']);
-                console.log(data['tel']);
-                $('#address_client').val(data['address']);
-                $('#tel_client').val(data['tel']);
+                switch (table){
+                    case 'clients': $('#address_client').val(data['address']);
+                                    $('#tel_client').val(data['tel']);
+                                    break;
+                }
             }
         });
     }
