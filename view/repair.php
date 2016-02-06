@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 </p>
-                <p>Номер: <input class="form-control" type="text" name="number"></p>
+                <p>Номер: <input class="form-control" type="text" name="number" value="<?=$number?>"></p>
             </fieldset>
             <fieldset>
                 <legend>Клиент</legend>

@@ -38,6 +38,12 @@ class C_Page extends C_Base
         $status = $model->get_all('status');
         $location = $model->get_all('location');
         $users = $model->get_all('users');
-        $this->content = $this->template("view/$pageName.php", ["clients" => $clients, "type" => $type, "brend" => $brend, "status" => $status, "location" => $location, "users" => $users]);
+        $allRepairs = $model->get_all('repair');
+        $lastNumber = [0];
+        foreach($allRepairs as $key=>$value) {
+            array_push($lastNumber, $value['number']);
+        }
+        $number = max($lastNumber) + 1;
+        $this->content = $this->template("view/$pageName.php", ["clients" => $clients, "type" => $type, "brend" => $brend, "status" => $status, "location" => $location, "users" => $users, "number" => $number]);
     }
 }
