@@ -44,4 +44,27 @@ $(document).ready(function(){
         dateEnd();
     });
 
+    $("select[name=id_client]").val('0');
+    $("select[name=id_client]").change(function() {
+        loadData($(this).val());
+    });
+
+    function loadData($id){
+        console.log($id);
+        $.ajax({
+            type: "POST",
+            url: "/ServicePartner98/model/ajax.php",
+            dataType: 'json',
+            data: {id_client: $id},
+            success: function (data) {
+                console.log(data);
+                console.log();
+                console.log(data[0]['tel']);
+                $('#address_client').val(data[0]['address']);
+                $('#tel_client').val(data[0]['tel']);
+            }
+        });
+    }
+
+
 });

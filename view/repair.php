@@ -24,12 +24,13 @@
             <fieldset>
                 <legend>Клиент</legend>
                 <p>Ф.И.О.: <select class="form-control" name="id_client" size="1" required">
+                    <option value="0" disabled>Выберите клиента</option>
                     <?php foreach($clients as $key=>$value){?>
                     <option value="<?=$value['id_client']?>"><?=$value['client']?></option></p>
                 <?php } ?>
                 </select>
-                <p>Адрес: <input class="form-control" type="text" value="<?php echo 'пусто'//$address?>"></p>
-                <p>Номер телефона: <input class="form-control" type="text" value="<?php echo 'пусто'//$tel?>"></p>
+                <p>Адрес: <input id="address_client" class="form-control" type="text" disabled></p>
+                <p>Номер телефона: <input id="tel_client" class="form-control" disabled type="text"></p>
             </fieldset>
             <fieldset>
                 <legend>Аппарат</legend>
