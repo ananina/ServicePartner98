@@ -1,6 +1,6 @@
 RewriteEngine On
 
-RewriteBase /DBPartner98
+RewriteBase /ServicePartner98
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
