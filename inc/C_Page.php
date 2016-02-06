@@ -29,4 +29,15 @@ class C_Page extends C_Base
         $this->content = $this->template("view/$pageName.php", ["params"=>$params]);
     }
 
+    public function action_form_repair (){
+        $pageName = $this->params[2];
+        $model = model::GetInstance();
+        $clients = $model->get_all('clients');
+        $type = $model->get_all('type');
+        $brend = $model->get_all('brend');
+        $status = $model->get_all('status');
+        $location = $model->get_all('location');
+        $users = $model->get_all('users');
+        $this->content = $this->template("view/$pageName.php", ["clients" => $clients, "type" => $type, "brend" => $brend, "status" => $status, "location" => $location, "users" => $users]);
+    }
 }
