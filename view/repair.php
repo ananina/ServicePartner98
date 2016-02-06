@@ -68,7 +68,7 @@
                 <legend>Комментарий</legend>
                 <textarea class="form-control" cols="10" rows="5" name="comment"></textarea>
             </fieldset>
-            <span>Гарантия <input type="text" name="garant"> мес.  |</span>
+            <span>Гарантия <input class="form-control" type="text" name="garant"> мес.  |</span>
                     <span>Мастер <select class="form-control" name="id_user">
                             <?php foreach($users as $key=>$value){?>
                                 <option value="<?=$value['id_user']?>"><?=$value['user']?></option>
