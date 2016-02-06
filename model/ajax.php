@@ -1,12 +1,18 @@
 <?php
-require_once 'db_mysql.php';
-if(!empty($_POST['id_client'])){
-    $id_client = (int)$_POST['id_client'];
+require_once 'model.php';
+if(!empty($_POST['table'])){
+    $table = $_POST['table'];
 }
-if(isset($id_client)) {
-    $dbMYSQL = dbMYSQL::GetInstance();
-    $q = 'SELECT * FROM `clients` WHERE `id_client`='.$id_client.'';
-    $data = $dbMYSQL->select($q);
+if(!empty($_POST['id_name'])){
+    $id_name = $_POST['id_name'];
+}
+if(!empty($_POST['id'])){
+    $id = (int)$_POST['id'];
+}
+
+if(isset($table) && isset($id_name) && isset($id)) {
+    $model = model::GetInstance();
+    $data = $model->select($table, $id_name, $id);
     print_r(json_encode($data));
     exit;
 }
