@@ -47,19 +47,51 @@ $(document).ready(function(){
     $("select[name=id_client]").val('0');
     $("select[name=id_client]").change(function() {
         var id = $(this).val();
-        loadData('clients', 'id_client', id);
+        loadData('one', 'clients', 'id_client', id);
     });
 
-    function loadData(table, id_name, id){
+    function loadData(count, table, id_name, id){
         $.ajax({
             type: "POST",
             url: "/ServicePartner98/model/ajax.php",
             dataType: 'json',
-            data: {table : table, id_name : id_name, id: id},
+            data: {count : count, table : table, id_name : id_name, id: id},
             success: function (data) {
                 switch (table){
                     case 'clients': $('#address_client').val(data['address']);
                                     $('#tel_client').val(data['tel']);
+                                    break;
+                    case 'materials':
+                                    for(item in data){
+                                        console.log(data[item]);
+                                        var idMaterial = data[item]['id_material'];
+                                        var material = data[item]['material'];
+                                        $('<option>').attr('value', idMaterial).html(material).appendTo('select.selectMaterial:last');
+                                    }
+                                    $('select.selectMaterial').selectpicker({
+                                        liveSearch: true,
+                                        title: 'Выберите материал...'
+                                    });
+                                    /* проверка значения
+                                    $('select.selectMaterial').on('changed.bs.select', function (e) {
+                                    console.log($(this).val());
+                                    });*/
+                                    $("input[name=price]").on("change", function(){
+                                        var count = $(this).parent().parent().find('input[name=count]').val();
+                                        if(count != ''){
+                                            var summ = $(this).val() * count;
+                                            $(this).parent().parent().find('input[name=summ]').val(summ);
+                                        }else{
+                                            $(this).parent().parent().find('input[name=summ]').val('');
+                                        }
+                                    });
+                                    $("input[name=count]").on("change", function(){
+                                        var price = $(this).parent().parent().find('input[name=price]').val();
+                                        if(price != ''){
+                                            var summ = $(this).val() * price;
+                                            $(this).parent().parent().find('input[name=summ]').val(summ);
+                                        }
+                                    });
                                     break;
                 }
             }
@@ -67,5 +99,18 @@ $(document).ready(function(){
     }
 
     $("select[name=id_status]").val('1');
+
+    $("#btnAddMaterials").click(function(){
+        $('<tr>').appendTo('#tableMaterials');
+        $('<td>').appendTo('tr:last');
+        $('<select>').attr('class', 'selectMaterial').attr('name', 'material').appendTo('td:last');
+        $('<td>').appendTo('tr:last');
+        $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'price').appendTo('td:last');
+        $('<td>').appendTo('tr:last');
+        $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'count').appendTo('td:last');
+        $('<td>').appendTo('tr:last');
+        $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'summ').attr('disabled', 'disabled').appendTo('td:last');
+        loadData('all', 'materials');
+    });
 
 });

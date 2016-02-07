@@ -7,11 +7,13 @@
     <title><?=$title?></title>
     <link href="<?=FPATH?>assets/bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?=FPATH?>assets/bootstrap-datepicker-master/dist/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <link href="<?=FPATH?>assets/bootstrap-select-1.9.4/dist/css/bootstrap-select.min.css" rel="stylesheet">
     <link href="<?=FPATH?>assets/style.css" rel="stylesheet">
     <script src="<?=FPATH?>assets/jquery/jquery-1.11.3.min.js" type="text/javascript"></script>
     <script src="<?=FPATH?>assets/jquery/jquery.maskedinput.min.js"  type="text/javascript"></script>
     <script src="<?=FPATH?>assets/bootstrap-3.3.6-dist/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="<?=FPATH?>assets/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
+    <script src="<?=FPATH?>assets/bootstrap-select-1.9.4/dist/js/bootstrap-select.min.js" type="text/javascript"></script>
     <script src="<?=FPATH?>assets/script.js" type="text/javascript"></script>
 </head>
 <body>

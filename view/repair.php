@@ -97,19 +97,13 @@
         </div>
 
         <div role="tabpanel" class="tab-pane" id="materials-data">
-            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalMaterials">Добавить</button>
-            <table class="table table-hover">
+            <button id="btnAddMaterials" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalMaterials">Добавить</button>
+            <table id="tableMaterials" class="table table-hover">
                 <tr>
                     <td>Наименование</td>
                     <td>Цена, руб.</td>
                     <td>Количество, шт.</td>
                     <td>Сумма, руб.</td>
-                </tr>
-                <tr>
-                    <td><input class="form-control" type="text" name="material"></td>
-                    <td><input class="form-control count" type="text" name="price"</td>
-                    <td><input class="form-control count" type="text" name="count"</td>
-                    <td><input class="form-control count" type="text" name="summ" disabled></td>
                 </tr>
             </table>
         </div>
@@ -121,7 +115,7 @@
     <button type="submit" class="btn btn-default" name="cancel">Отмена</button>
 </form>
 
-<!-- Modal -->
+<!-- Modal
 <div class="modal fade" id="modalMaterials" tabindex="-1" role="dialog" aria-labelledby="labelModalMaterials">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -129,8 +123,10 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="labelModalMaterials">Выберите материалы...</h4>
             </div>
-            <div class="modal-body">
-                ...
+            <div id="choiceMaterials" class="modal-body">
+                <div class="checkbox">
+                    <ul></ul>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
@@ -138,4 +134,4 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
