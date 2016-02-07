@@ -99,5 +99,6 @@
         <div role="tabpanel" class="tab-pane" id="works-data"> </div>
     </div>
 
-    <button type="submit" class="btn btn-default">Submit</button>
+    <button type="submit" class="btn btn-default" name="save">Сохранить</button>
+    <button type="submit" class="btn btn-default" name="cancel">Отмена</button>
 </form>
