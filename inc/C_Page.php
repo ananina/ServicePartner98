@@ -44,6 +44,7 @@ class C_Page extends C_Base
             array_push($lastNumber, $value['number']);
         }
         $number = max($lastNumber) + 1;
-        $this->content = $this->template("view/$pageName.php", ["clients" => $clients, "type" => $type, "brend" => $brend, "status" => $status, "location" => $location, "users" => $users, "number" => $number]);
+        $today = date("d.m.Y");
+        $this->content = $this->template("view/$pageName.php", ["clients" => $clients, "type" => $type, "brend" => $brend, "status" => $status, "location" => $location, "users" => $users, "number" => $number, "date" => $today]);
     }
 }

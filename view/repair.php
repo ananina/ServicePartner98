@@ -13,7 +13,7 @@
                 <legend>Реквизиты</legend>
 
                 <p>Дата: <div class="input-group date date-begin" data-provide="datepicker">
-                    <input type="text" class="form-control dateBegin" name="date_begin" value="<?php echo date("d.m.Y");?>">
+                    <input type="text" class="form-control dateBegin" name="date_begin" value="<?=$date?>">
                     <div class="input-group-addon">
                         <span class="glyphicon glyphicon-th"></span>
                     </div>
@@ -24,7 +24,7 @@
             <fieldset>
                 <legend>Клиент</legend>
                 <p>Ф.И.О.: <select class="form-control" name="id_client" size="1" required">
-                    <option value="0" disabled>Выберите клиента</option>
+                    <option value="0" disabled>Выберите клиента...</option>
                     <?php foreach($clients as $key=>$value){?>
                     <option value="<?=$value['id_client']?>"><?=$value['client']?></option></p>
                 <?php } ?>
@@ -57,8 +57,14 @@
             </fieldset>
             <fieldset>
                 <legend>Статус</legend>
-                <input class="form-control" type="date" name="date_end">
+                <div class="input-group date date-end" data-provide="datepicker">
+                    <input type="text" class="form-control dateBegin" name="date_end" value="<?=$date?>">
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                </div>
                 <select class="form-control" name="id_status" size="1">
+                    <option value="0" disabled>Выберите статус...</option>
                     <?php foreach($status as $key=>$value){?>
                         <option value="<?=$value['id_status']?>"><?=$value['status']?></option>
                     <?php }?>

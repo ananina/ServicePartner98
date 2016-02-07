@@ -66,5 +66,6 @@ $(document).ready(function(){
         });
     }
 
+    $("select[name=id_status]").val('1');
 
 });
