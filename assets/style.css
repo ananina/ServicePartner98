@@ -10,3 +10,6 @@ input.form-control{
 select.form-control{
     width: 350px;
 }
+input.count{
+    width: 150px;
+}

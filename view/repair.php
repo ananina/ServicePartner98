@@ -95,10 +95,47 @@
                 </div>
             </span>
         </div>
-        <div role="tabpanel" class="tab-pane" id="materials-data"> </div>
+
+        <div role="tabpanel" class="tab-pane" id="materials-data">
+            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalMaterials">Добавить</button>
+            <table class="table table-hover">
+                <tr>
+                    <td>Наименование</td>
+                    <td>Цена, руб.</td>
+                    <td>Количество, шт.</td>
+                    <td>Сумма, руб.</td>
+                </tr>
+                <tr>
+                    <td><input class="form-control" type="text" name="material"></td>
+                    <td><input class="form-control count" type="text" name="price"</td>
+                    <td><input class="form-control count" type="text" name="count"</td>
+                    <td><input class="form-control count" type="text" name="summ" disabled></td>
+                </tr>
+            </table>
+        </div>
+
         <div role="tabpanel" class="tab-pane" id="works-data"> </div>
     </div>
 
     <button type="submit" class="btn btn-default" name="save">Сохранить</button>
     <button type="submit" class="btn btn-default" name="cancel">Отмена</button>
 </form>
+
+<!-- Modal -->
+<div class="modal fade" id="modalMaterials" tabindex="-1" role="dialog" aria-labelledby="labelModalMaterials">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="labelModalMaterials">Выберите материалы...</h4>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <button type="button" class="btn btn-primary">Выбрать</button>
+            </div>
+        </div>
+    </div>
+</div>
