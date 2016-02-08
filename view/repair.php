@@ -97,7 +97,7 @@
         </div>
 
         <div role="tabpanel" class="tab-pane" id="materials-data">
-            <button id="btnAddMaterials" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalMaterials">Добавить</button>
+            <button id="btnAddMaterials" type="button" class="btn btn-primary btn-lg">Добавить</button>
             <table id="tableMaterials" class="table table-hover">
                 <tr>
                     <td>Наименование</td>
@@ -108,7 +108,17 @@
             </table>
         </div>
 
-        <div role="tabpanel" class="tab-pane" id="works-data"> </div>
+        <div role="tabpanel" class="tab-pane" id="works-data">
+            <button id="btnAddWorks" type="button" class="btn btn-primary btn-lg">Добавить</button>
+            <table id="tableWorks" class="table table-hover">
+                <tr>
+                    <td>Наименование</td>
+                    <td>Цена, руб.</td>
+                    <td>Количество, шт.</td>
+                    <td>Сумма, руб.</td>
+                </tr>
+            </table>
+        </div>
     </div>
 
     <button type="submit" class="btn btn-default" name="save">Сохранить</button>

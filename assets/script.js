@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+    //обработка событий на странице repair
     $('#repair-tab a').click(function (e) {
         e.preventDefault();
         $(this).tab('show')
@@ -63,7 +64,7 @@ $(document).ready(function(){
                                     break;
                     case 'materials':
                                     for(item in data){
-                                        console.log(data[item]);
+                                        //console.log(data[item]);
                                         var idMaterial = data[item]['id_material'];
                                         var material = data[item]['material'];
                                         $('<option>').attr('value', idMaterial).html(material).appendTo('select.selectMaterial:last');
@@ -76,20 +77,55 @@ $(document).ready(function(){
                                     $('select.selectMaterial').on('changed.bs.select', function (e) {
                                     console.log($(this).val());
                                     });*/
-                                    $("input[name=price]").on("change", function(){
-                                        var count = $(this).parent().parent().find('input[name=count]').val();
+                                    $("input[name=materialPrice]").on("change", function(){
+                                        var count = $(this).parent().parent().find('input[name=materialCount]').val();
                                         if(count != ''){
                                             var summ = $(this).val() * count;
-                                            $(this).parent().parent().find('input[name=summ]').val(summ);
+                                            $(this).parent().parent().find('input[name=materialSumm]').val(summ);
                                         }else{
-                                            $(this).parent().parent().find('input[name=summ]').val('');
+                                            $(this).parent().parent().find('input[name=materialSumm]').val('');
                                         }
                                     });
-                                    $("input[name=count]").on("change", function(){
-                                        var price = $(this).parent().parent().find('input[name=price]').val();
+                                    $("input[name=materialCount]").on("change", function(){
+                                        var price = $(this).parent().parent().find('input[name=materialPrice]').val();
                                         if(price != ''){
                                             var summ = $(this).val() * price;
-                                            $(this).parent().parent().find('input[name=summ]').val(summ);
+                                            $(this).parent().parent().find('input[name=materialSumm]').val(summ);
+                                        }
+                                    });
+                                    break;
+                    case 'works':
+                                    var work_price = [];
+                                    for(item in data){
+                                        var idWork = data[item]['id_work'];
+                                        var work = data[item]['work'];
+                                        var price = data[item]['price'];
+                                        work_price[idWork] = price;
+                                        $('<option>').attr('value', idWork).html(work).appendTo('select.selectWork:last');
+                                    }
+                                    $('select.selectWork').selectpicker({
+                                        liveSearch: true,
+                                        title: 'Выберите работу...'
+                                    });
+
+                                    $('select.selectWork').on('changed.bs.select', function () {
+                                        var id = $(this).val();
+                                        $(this).parent().parent().parent().find("input[name=workPrice]").val(work_price[id]);
+                                     });
+                                    $("input[name=workPrice]").on("change", function(){
+                                        var count = $(this).parent().parent().find('input[name=workCount]').val();
+                                        if(count != ''){
+                                            var summ = $(this).val() * count;
+                                            $(this).parent().parent().find('input[name=workSumm]').val(summ);
+                                        }else{
+                                            $(this).parent().parent().find('input[name=workSumm]').val('');
+                                        }
+                                    });
+                                    $("input[name=workCount]").on("change", function(){
+                                        var price = $(this).parent().parent().find('input[name=workPrice]').val();
+                                        if(price != ''){
+                                            var summ = $(this).val() * price;
+                                            $(this).parent().parent().find('input[name=workSumm]').val(summ);
                                         }
                                     });
                                     break;
@@ -102,15 +138,28 @@ $(document).ready(function(){
 
     $("#btnAddMaterials").click(function(){
         $('<tr>').appendTo('#tableMaterials');
-        $('<td>').appendTo('tr:last');
-        $('<select>').attr('class', 'selectMaterial').attr('name', 'material').appendTo('td:last');
-        $('<td>').appendTo('tr:last');
-        $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'price').appendTo('td:last');
-        $('<td>').appendTo('tr:last');
-        $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'count').appendTo('td:last');
-        $('<td>').appendTo('tr:last');
-        $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'summ').attr('disabled', 'disabled').appendTo('td:last');
+        $('<td>').appendTo('#tableMaterials tr:last');
+        $('<select>').attr('class', 'selectMaterial').attr('name', 'material').appendTo('#tableMaterials td:last');
+        $('<td>').appendTo('#tableMaterials tr:last');
+        $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'materialPrice').appendTo('#tableMaterials td:last');
+        $('<td>').appendTo('#tableMaterials tr:last');
+        $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'materialCount').appendTo('#tableMaterials td:last');
+        $('<td>').appendTo('#tableMaterials tr:last');
+        $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'materialSumm').attr('disabled', 'disabled').appendTo('#tableMaterials td:last');
         loadData('all', 'materials');
+    });
+
+    $("#btnAddWorks").click(function(){
+        $('<tr>').appendTo('#tableWorks');
+        $('<td>').appendTo('#tableWorks tr:last');
+        $('<select>').attr('class', 'selectWork').attr('name', 'work').appendTo('#tableWorks td:last');
+        $('<td>').appendTo('#tableWorks tr:last');
+        $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'workPrice').appendTo('#tableWorks td:last');
+        $('<td>').appendTo('#tableWorks tr:last');
+        $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'workCount').appendTo('#tableWorks td:last');
+        $('<td>').appendTo('#tableWorks tr:last');
+        $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'workSumm').attr('disabled', 'disabled').appendTo('#tableWorks td:last');
+        loadData('all', 'works');
     });
 
 });
