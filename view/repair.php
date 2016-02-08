@@ -8,7 +8,7 @@
     </div>
 
     <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="repair-data">
+        <div role="tabpanel" class="tab-pane fade in active" id="repair-data">
             <fieldset>
                 <legend>Реквизиты</legend>
 
@@ -96,7 +96,7 @@
             </span>
         </div>
 
-        <div role="tabpanel" class="tab-pane" id="materials-data">
+        <div role="tabpanel" class="tab-pane fade" id="materials-data">
             <button id="btnAddMaterials" type="button" class="btn btn-primary btn-lg">Добавить</button>
             <table id="tableMaterials" class="table table-hover">
                 <tr>
@@ -108,7 +108,7 @@
             </table>
         </div>
 
-        <div role="tabpanel" class="tab-pane" id="works-data">
+        <div role="tabpanel" class="tab-pane fade" id="works-data">
             <button id="btnAddWorks" type="button" class="btn btn-primary btn-lg">Добавить</button>
             <table id="tableWorks" class="table table-hover">
                 <tr>
