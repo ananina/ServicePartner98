@@ -73,24 +73,41 @@ $(document).ready(function(){
                                         liveSearch: true,
                                         title: 'Выберите материал...'
                                     });
+
+                                    $('select.selectMaterial').on('changed.bs.select', function () {
+                                        $(this).parent().parent().parent().find("input[name=materialPrice]").removeAttr('disabled');
+                                        $(this).parent().parent().parent().find("input[name=materialCount]").val('1').removeAttr('disabled');
+                                    });
                                     /* проверка значения
                                     $('select.selectMaterial').on('changed.bs.select', function (e) {
                                     console.log($(this).val());
                                     });*/
-                                    $("input[name=materialPrice]").on("change", function(){
+
+                                    $("input[name=materialPrice]").on("keyup", function(){
+                                        isNumericPrice($(this));
+                                    });
+                                    $("input[name=materialCount]").on("keyup", function(){
+                                        isNumericCount($(this));
+                                    });
+
+                                    $("input[name=materialPrice]").on("blur", function(){
+                                        var price = (+$(this).val()).toFixed(2);
+                                        $(this).val(price);
                                         var count = $(this).parent().parent().find('input[name=materialCount]').val();
                                         if(count != ''){
-                                            var summ = $(this).val() * count;
+                                            var summ = ($(this).val() * count).toFixed(2);
                                             $(this).parent().parent().find('input[name=materialSumm]').val(summ);
                                         }else{
                                             $(this).parent().parent().find('input[name=materialSumm]').val('');
                                         }
                                     });
-                                    $("input[name=materialCount]").on("change", function(){
+                                    $("input[name=materialCount]").on("blur", function(){
                                         var price = $(this).parent().parent().find('input[name=materialPrice]').val();
                                         if(price != ''){
-                                            var summ = $(this).val() * price;
+                                            var summ = ($(this).val() * price).toFixed(2);
                                             $(this).parent().parent().find('input[name=materialSumm]').val(summ);
+                                        }else{
+                                            $(this).parent().parent().find('input[name=materialSumm]').val('');
                                         }
                                     });
                                     break;
@@ -110,25 +127,66 @@ $(document).ready(function(){
 
                                     $('select.selectWork').on('changed.bs.select', function () {
                                         var id = $(this).val();
-                                        $(this).parent().parent().parent().find("input[name=workPrice]").val(work_price[id]);
+                                        $(this).parent().parent().parent().find("input[name=workPrice]").val(work_price[id]).removeAttr('disabled');
+                                        $(this).parent().parent().parent().find("input[name=workCount]").val('1').removeAttr('disabled');
                                      });
-                                    $("input[name=workPrice]").on("change", function(){
+
+                                    $("input[name=workPrice]").on("keyup", function(){
+                                        isNumericPrice($(this));
+                                    });
+                                    $("input[name=workCount]").on("keyup", function(){
+                                        isNumericCount($(this));
+                                    });
+
+                                    $("input[name=workPrice]").on("blur", function(){
+                                        var price = (+$(this).val()).toFixed(2);
+                                        $(this).val(price);
                                         var count = $(this).parent().parent().find('input[name=workCount]').val();
                                         if(count != ''){
-                                            var summ = $(this).val() * count;
+                                            var summ = ($(this).val() * count).toFixed(2);
                                             $(this).parent().parent().find('input[name=workSumm]').val(summ);
                                         }else{
                                             $(this).parent().parent().find('input[name=workSumm]').val('');
                                         }
                                     });
-                                    $("input[name=workCount]").on("change", function(){
+                                    $("input[name=workCount]").on("blur", function(){
                                         var price = $(this).parent().parent().find('input[name=workPrice]').val();
                                         if(price != ''){
-                                            var summ = $(this).val() * price;
+                                            var summ = ($(this).val() * price).toFixed(2);
                                             $(this).parent().parent().find('input[name=workSumm]').val(summ);
+                                        }else{
+                                            $(this).parent().parent().find('input[name=workSumm]').val('');
                                         }
                                     });
                                     break;
+                }
+
+                function isNumericPrice(elem){
+                    var str = elem.val();
+                    if(isNaN(str)){
+                        str = str.substring(0,str.length-1);
+                        elem.val(str);
+                    }else{
+                        var reg = /\d+(\.\d{3})/;
+                        if(reg.test(str)){
+                            str = str.substring(0,str.length-1);
+                            elem.val(str);
+                        }
+                    }
+                }
+                function isNumericCount(elem){
+                    var str = elem.val();
+                    if(isNaN(str)){
+                        str = str.substring(0,str.length-1);
+                        elem.val(str);
+                    }else{
+                        var reg = /\./;
+                        if(reg.test(str)){
+                            str = str.substring(0,str.length-1);
+                            elem.val(str);
+                        }
+
+                    }
                 }
             }
         });
@@ -141,9 +199,9 @@ $(document).ready(function(){
         $('<td>').appendTo('#tableMaterials tr:last');
         $('<select>').attr('class', 'selectMaterial').attr('name', 'material').appendTo('#tableMaterials td:last');
         $('<td>').appendTo('#tableMaterials tr:last');
-        $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'materialPrice').appendTo('#tableMaterials td:last');
+        $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'materialPrice').attr('disabled', 'disabled').appendTo('#tableMaterials td:last');
         $('<td>').appendTo('#tableMaterials tr:last');
-        $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'materialCount').appendTo('#tableMaterials td:last');
+        $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'materialCount').attr('disabled', 'disabled').appendTo('#tableMaterials td:last');
         $('<td>').appendTo('#tableMaterials tr:last');
         $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'materialSumm').attr('disabled', 'disabled').appendTo('#tableMaterials td:last');
         loadData('all', 'materials');
@@ -154,12 +212,14 @@ $(document).ready(function(){
         $('<td>').appendTo('#tableWorks tr:last');
         $('<select>').attr('class', 'selectWork').attr('name', 'work').appendTo('#tableWorks td:last');
         $('<td>').appendTo('#tableWorks tr:last');
-        $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'workPrice').appendTo('#tableWorks td:last');
+        $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'workPrice').attr('disabled', 'disabled').appendTo('#tableWorks td:last');
         $('<td>').appendTo('#tableWorks tr:last');
-        $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'workCount').appendTo('#tableWorks td:last');
+        $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'workCount').attr('disabled', 'disabled').appendTo('#tableWorks td:last');
         $('<td>').appendTo('#tableWorks tr:last');
         $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'workSumm').attr('disabled', 'disabled').appendTo('#tableWorks td:last');
         loadData('all', 'works');
     });
+
+
 
 });
