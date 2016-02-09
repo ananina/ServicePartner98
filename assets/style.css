@@ -13,3 +13,15 @@ select.form-control{
 input.count{
     width: 150px;
 }
+.panel1{
+    width: 500px;
+    margin: auto;
+}
+.panel2{
+    width: 800px;
+    margin: auto;
+}
+.panel3{
+    width: 1050px;
+    margin: auto;
+}
