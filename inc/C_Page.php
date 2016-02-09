@@ -47,4 +47,38 @@ class C_Page extends C_Base
         $today = date("d.m.Y");
         $this->content = $this->template("view/$pageName.php", ["clients" => $clients, "type" => $type, "brend" => $brend, "status" => $status, "location" => $location, "users" => $users, "number" => $number, "date" => $today]);
     }
+
+    public function action_add(){
+        $pageName = $this->params[2];
+        if(isset($_POST)){
+            $model = model::GetInstance();
+            $id = $model->add($pageName, $_POST);
+        }
+
+        $this->action_open($pageName);
+    }
+
+    public function action_edit()
+    {
+        $idName = $this->params[3];
+        $id = $this->params[4];
+        $pageName = $this->params[2];
+        $button = $this->post('button');
+
+        if ($id != NULL) {
+            switch($button){
+                case 'Удалить':
+                    $model = model::GetInstance();
+                    $model->delete($pageName, $idName, $id);
+                    break;
+                case 'Сохранить изменения':
+                    $params = $_POST;
+                    unset($params['button']);
+                    $model = model::GetInstance();
+                    $model->edit($pageName, $idName, $id, $params);
+                    break;
+            }
+            $this->action_open($pageName);
+        }
+    }
 }

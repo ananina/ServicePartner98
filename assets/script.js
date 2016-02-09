@@ -220,6 +220,36 @@ $(document).ready(function(){
         loadData('all', 'works');
     });
 
+    $(".btnEditMaterial").click(function(event){
+        event.preventDefault();
+        var material = $(this).parent().prev().find("input[name=material]").val();
+        var id = $(this).parent().prev().find("input[name=material]").attr('data-id');
+        var action = $('#editMaterialModal').parent().attr("action") + id;
+        $('#editMaterialModal').parent().attr("action", action);
+        $('#editMaterialModal .modal-body').empty();
+        $('<input>').attr({"type":"text", "class":"form-control", "name":"material", "value":material}).appendTo($('#editMaterialModal .modal-body'));
 
+    });
 
+    $(".btnRemoveMaterial").click(function(event) {
+        event.preventDefault();
+        var id = $(this).parent().prev().find("input[name=material]").attr('data-id');
+        var action = $('#removeMaterialModal').parent().attr("action") + id;
+        $('#removeMaterialModal').parent().attr("action", action);
+    });
+
+    $('.btnAddMaterial').click(function(event) {
+        if($('input[data-name=newMaterial]').val() == ''){
+            event.preventDefault();
+            $('input[data-name=newMaterial]').parent().addClass('has-error');
+            $('#newMaterial').addClass('danger');
+            $(this).next().removeAttr('hidden');
+        }
+    });
+
+    $('input[data-name=newMaterial]').keydown(function(){
+        $(this).parent().removeClass('has-error');
+        $('#newMaterial').removeClass('danger');
+        $('.btnAddMaterial').next().attr('hidden', 'hidden');
+    });
 });
