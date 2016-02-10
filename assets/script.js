@@ -219,36 +219,51 @@ $(document).ready(function(){
         loadData('all', 'work');
     });
 
-    $(".btnEditMaterial").click(function(event){
+    $(".btnEdit").click(function(event){
         event.preventDefault();
-        var material = $(this).parent().prev().find("input[name=material]").val();
-        var id = $(this).parent().prev().find("input[name=material]").attr('data-id');
-        var action = $('#editMaterialModal').parent().attr("action") + id;
-        $('#editMaterialModal').parent().attr("action", action);
-        $('#editMaterialModal .modal-body').empty();
-        $('<input>').attr({"type":"text", "class":"form-control", "name":"material", "value":material}).appendTo($('#editMaterialModal .modal-body'));
-
+        var nameManual = $(this).parent().parent().attr('data-name');
+        var name = $(this).parent().parent().find("input[name=" + nameManual + "]").val();
+        var action = $(this).parent().parent().find("input[name=" + nameManual + "]").attr('data-path');
+        console.log(action);
+        $('#editModal').parent().attr("action", '');
+        $('#editModal').parent().attr("action", action);
+        $('#editModal .table-modal tr').empty();
+        var content = $(this).parent().parent().find('input');
+        console.log(content);
+        $(content).each(function(){
+            var nameElement = $(this).attr('name');
+            var valueElement = $(this).attr('value');
+            console.log(nameElement, valueElement);
+            $('<td>').appendTo($('.table-modal tr'));
+            $('<input>').attr({"type":"text", "class":"form-control", "name":nameElement, "value":valueElement}).appendTo($('#editModal .table-modal td:last'));
+        });
     });
 
-    $(".btnRemoveMaterial").click(function(event) {
+    $(".btnRemove").click(function(event) {
         event.preventDefault();
-        var id = $(this).parent().prev().find("input[name=material]").attr('data-id');
-        var action = $('#removeMaterialModal').parent().attr("action") + id;
-        $('#removeMaterialModal').parent().attr("action", action);
+        var nameManual = $(this).parent().parent().attr('data-name');
+        var action = $(this).parent().parent().find("input[name=" + nameManual + "]").attr('data-path');
+        $('#removeModal').parent().attr("action", '');
+        $('#removeModal').parent().attr("action", action);
     });
 
-    $('.btnAddMaterial').click(function(event) {
-        if($('input[data-name=newMaterial]').val() == ''){
-            event.preventDefault();
-            $('input[data-name=newMaterial]').parent().addClass('has-error');
-            $('#newMaterial').addClass('danger');
-            $(this).next().removeAttr('hidden');
-        }
+    $('.btnAdd').click(function(event) {
+        var btn = $(this);
+        var nameManual = btn.parent().parent().attr('data-name');
+        var content = btn.parent().parent().find('input:text');
+        $(content).each(function() {
+            if ($(this).val() == '') {
+                event.preventDefault();
+                $(this).parent().addClass('has-error');
+                $('tr[data-name=' + nameManual + ']').addClass('danger');
+                btn.next().removeAttr('hidden');
+            }
+        });
     });
 
     $('input[data-name=newMaterial]').keydown(function(){
         $(this).parent().removeClass('has-error');
-        $('#newMaterial').removeClass('danger');
-        $('.btnAddMaterial').next().attr('hidden', 'hidden');
+        $('tr[data-name=newMaterial]').removeClass('danger');
+        $('.btnAdd').next().attr('hidden', 'hidden');
     });
 });

@@ -9,23 +9,27 @@
                 <td></td>
             </tr>
             <?php foreach($params as $value){?>
-                <form action="<?=FPATH?>page/edit/type/id_type/<?=$value['id_type']?>" method="post">
-                    <tr>
-                        <td><input type="text" class="form-control" name="type" value="<?=$value['type']?>"></td>
+                    <tr data-name="type">
+                        <td><input type="text" class="form-control" name="type" disabled data-path="<?=FPATH?>page/edit/type/id_type/<?=$value['id_type']?>" value="<?=$value['type']?>"></td>
                         <td>
-                            <input type="submit" name="button" class="btn btn-default" value="Удалить">
-                            <input type="submit" name="button" class="btn btn-default" value="Изменить">
+                            <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#removeModal">Удалить</button>
+                            <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#editModal">Редактировать</button>
                         </td>
                     </tr>
-                </form>
             <?php }?>
             <form action="<?=FPATH?>page/add/type" method="post">
-                <tr>
-                    <td><input type="text" class="form-control" name="type"></td>
-                    <td><input type="submit" class="btn btn-default" value="Добавить"></td>
+                <tr data-name="newType">
+                    <td><div class="form-group">
+                            <input type="text" class="form-control" name="type" data-name="newType" placeholder="Введите тип устройства...">
+                        </div>
+                    </td>
+                    <td><input type="submit" class="btn btn-default btnAdd" value="Добавить">
+                        <span class="text-danger " hidden>Нечего добавлять!!!</span>
+                    </td>
                 </tr>
             </form>
         </table>
     </div>
 </div>
 
+<?=$content?>

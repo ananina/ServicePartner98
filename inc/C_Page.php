@@ -26,7 +26,8 @@ class C_Page extends C_Base
         $pageName = $this->params[2];
         $model = model::GetInstance();
         $params = $model->get_all($pageName, $pageName, 'asc');
-        $this->content = $this->template("view/$pageName.php", ["params"=>$params]);
+        $content = $this->template("view/modal.php");
+        $this->content = $this->template("view/$pageName.php", ["params"=>$params, "content"=>$content]);
     }
 
     public function action_form_repair (){

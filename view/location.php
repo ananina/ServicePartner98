@@ -9,23 +9,27 @@
                 <td></td>
             </tr>
             <?php foreach($params as $value){?>
-                <form action="<?=FPATH?>page/edit/location/id_location/<?=$value['id_location']?>" method="post">
-                    <tr>
-                        <td><input type="text" class="form-control" name="location" value="<?=$value['location']?>"></td>
+                    <tr data-name="location">
+                        <td><input type="text" class="form-control" name="location" disabled data-path="<?=FPATH?>page/edit/location/id_location/<?=$value['id_location']?>" value="<?=$value['location']?>"></td>
                         <td>
-                            <input type="submit" name="button" class="btn btn-default" value="Удалить">
-                            <input type="submit" name="button" class="btn btn-default" value="Изменить">
+                            <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#removeModal">Удалить</button>
+                            <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#editModal">Редактировать</button>
                         </td>
                     </tr>
-                </form>
             <?php }?>
             <form action="<?=FPATH?>page/add/location" method="post">
-                <tr>
-                    <td><input type="text" class="form-control" name="location"></td>
-                    <td><input type="submit" class="btn btn-default" value="Добавить"></td>
+                <tr data-name="newLocation">
+                    <td><div class="form-group">
+                            <input type="text" class="form-control" name="location" data-name="newLocation" placeholder="Введите название подразделения...">
+                        </div>
+                    </td>
+                    <td><input type="submit" class="btn btn-default btnAdd" value="Добавить">
+                        <span class="text-danger " hidden>Нечего добавлять!!!</span>
+                    </td>
                 </tr>
             </form>
         </table>
     </div>
 </div>
 
+<?=$content?>

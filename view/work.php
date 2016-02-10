@@ -10,25 +10,32 @@
                 <td></td>
             </tr>
             <?php foreach($params as $value){?>
-                <form action="<?=FPATH?>page/edit/works/id_work/<?=$value['id_work']?>" method="post">
-                    <tr>
-                        <td><input type="text" class="form-control" name="work" value="<?=$value['work']?>"></td>
-                        <td><input type="text" class="form-control" name="price" value="<?=$value['price']?>"></td>
+                    <tr data-name="work">
+                        <td><input type="text" class="form-control" name="work" disabled data-path="<?=FPATH?>page/edit/work/id_work/<?=$value['id_work']?>" value="<?=$value['work']?>"></td>
+                        <td><input type="text" class="form-control" name="price" disabled value="<?=$value['price']?>"></td>
                         <td>
-                            <input type="submit" name="button" class="btn btn-default" value="Удалить">
-                            <input type="submit" name="button" class="btn btn-default" value="Изменить">
+                            <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#removeModal">Удалить</button>
+                            <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#editModal">Редактировать</button>
                         </td>
                     </tr>
-                </form>
             <?php }?>
-            <form action="<?=FPATH?>page/add/works" method="post">
-                <tr>
-                    <td><input type="text" class="form-control" name="work"></td>
-                    <td><input type="text" class="form-control" name="price"></td>
-                    <td><input type="submit" class="btn btn-default" value="Добавить"></td>
+            <form action="<?=FPATH?>page/add/work" method="post">
+                <tr data-name="newWork">
+                    <td><div class="form-group">
+                            <input type="text" class="form-control" name="work" data-name="newWork" placeholder="Введите название работы...">
+                        </div>
+                    </td>
+                    <td><div class="form-group">
+                            <input type="text" class="form-control" name="price" data-name="newWork" placeholder="Введите цену работы...">
+                        </div>
+                    </td>
+                    <td><input type="submit" class="btn btn-default btnAdd" value="Добавить">
+                        <span class="text-danger " hidden>Нечего добавлять!!!</span>
+                    </td>
                 </tr>
             </form>
         </table>
     </div>
 </div>
 
+<?=$content?>

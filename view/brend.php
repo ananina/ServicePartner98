@@ -9,23 +9,27 @@
                 <td></td>
             </tr>
             <?php foreach($params as $value){?>
-                <form action="<?=FPATH?>page/edit/brend/id_brend/<?=$value['id_brend']?>" method="post">
-                    <tr>
-                        <td><input type="text" class="form-control" name="brend" value="<?=$value['brend']?>"</td>
+                    <tr data-name="brend">
+                        <td><input type="text" class="form-control" name="brend" disabled data-path="<?=FPATH?>page/edit/brend/id_brend/<?=$value['id_brend']?>" value="<?=$value['brend']?>"</td>
                         <td>
-                            <input type="submit" class="btn btn-default" name="button" value="Удалить">
-                            <input type="submit" class="btn btn-default" name="button" value="Изменить">
+                            <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#removeModal">Удалить</button>
+                            <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#editModal">Редактировать</button>
                         </td>
                     </tr>
-                </form>
             <?php }?>
             <form action="<?=FPATH?>page/add/brend" method="post">
-                <tr>
-                    <td><input type="text"class="form-control" name="brend"></td>
-                    <td><input type="submit" class="btn btn-default" value="Добавить"></td>
+                <tr data-name="newBrend">
+                    <td><div class="form-group">
+                            <input type="text" class="form-control" name="brend" data-name="newBrend" placeholder="Введите название производителя...">
+                        </div>
+                    </td>
+                    <td><input type="submit" class="btn btn-default btnAdd" value="Добавить">
+                        <span class="text-danger " hidden>Нечего добавлять!!!</span>
+                    </td>
                 </tr>
             </form>
         </table>
     </div>
 </div>
 
+<?=$content?>
