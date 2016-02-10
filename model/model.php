@@ -12,9 +12,13 @@ class model{
         return self::$instance;
     }
 
-    public function get_all($table)
+    public function get_all($table, $keySort='', $methodSort='')
     {
-        $q = 'SELECT * FROM `' . $table . '`';
+        if($keySort!='' && $methodSort!=''){
+            $q = 'SELECT * FROM `' . $table . '` ORDER BY `' . $keySort . '` ' . $methodSort . '';
+        }else{
+            $q = 'SELECT * FROM `' . $table . '`';
+        }
 
         $db_mysql = dbMYSQL::GetInstance();
         $all = $db_mysql->select($q);
