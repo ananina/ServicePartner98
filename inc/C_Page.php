@@ -6,13 +6,13 @@ class C_Page extends C_Base
 {
     public function action_get_all(){
         $model = model::GetInstance();
-        $params = $model->get_all('repair');
-        $clients = $model->get_all('clients');
+        $params = $model->get_all('repair', 'number', 'desc');
+        $clients = $model->get_all('client');
         $type = $model->get_all('type');
         $brend = $model->get_all('brend');
         $status = $model->get_all('status');
         $location = $model->get_all('location');
-        $users = $model->get_all('users');
+        $users = $model->get_all('user');
         return $this->template("view/table.php", ["params" => $params, "clients" => $clients, "types" => $type, "brends" => $brend, "statuses" => $status, "locations" => $location, "users" => $users]);
     }
 
@@ -25,19 +25,19 @@ class C_Page extends C_Base
     public function action_open(){
         $pageName = $this->params[2];
         $model = model::GetInstance();
-        $params = $model->get_all($pageName);
+        $params = $model->get_all($pageName, $pageName, 'asc');
         $this->content = $this->template("view/$pageName.php", ["params"=>$params]);
     }
 
     public function action_form_repair (){
         $pageName = $this->params[2];
         $model = model::GetInstance();
-        $clients = $model->get_all('clients');
+        $clients = $model->get_all('client');
         $type = $model->get_all('type');
         $brend = $model->get_all('brend');
         $status = $model->get_all('status');
         $location = $model->get_all('location');
-        $users = $model->get_all('users');
+        $users = $model->get_all('user');
         $allRepairs = $model->get_all('repair');
         $lastNumber = [0];
         foreach($allRepairs as $key=>$value) {

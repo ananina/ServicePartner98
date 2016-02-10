@@ -41,14 +41,13 @@ $(document).ready(function(){
 
     dateEnd();
     $(".dateBegin").change(function(){
-        console.log('да');
         dateEnd();
     });
 
     $("select[name=id_client]").val('0');
     $("select[name=id_client]").change(function() {
         var id = $(this).val();
-        loadData('one', 'clients', 'id_client', id);
+        loadData('one', 'client', 'id_client', id);
     });
 
     function loadData(count, table, id_name, id){
@@ -59,10 +58,10 @@ $(document).ready(function(){
             data: {count : count, table : table, id_name : id_name, id: id},
             success: function (data) {
                 switch (table){
-                    case 'clients': $('#address_client').val(data['address']);
+                    case 'client': $('#address_client').val(data['address']);
                                     $('#tel_client').val(data['tel']);
                                     break;
-                    case 'materials':
+                    case 'material':
                                     for(item in data){
                                         //console.log(data[item]);
                                         var idMaterial = data[item]['id_material'];
@@ -111,7 +110,7 @@ $(document).ready(function(){
                                         }
                                     });
                                     break;
-                    case 'works':
+                    case 'work':
                                     var work_price = [];
                                     for(item in data){
                                         var idWork = data[item]['id_work'];
@@ -204,7 +203,7 @@ $(document).ready(function(){
         $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'materialCount').attr('disabled', 'disabled').appendTo('#tableMaterials td:last');
         $('<td>').appendTo('#tableMaterials tr:last');
         $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'materialSumm').attr('disabled', 'disabled').appendTo('#tableMaterials td:last');
-        loadData('all', 'materials');
+        loadData('all', 'material');
     });
 
     $("#btnAddWorks").click(function(){
@@ -217,7 +216,7 @@ $(document).ready(function(){
         $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'workCount').attr('disabled', 'disabled').appendTo('#tableWorks td:last');
         $('<td>').appendTo('#tableWorks tr:last');
         $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'workSumm').attr('disabled', 'disabled').appendTo('#tableWorks td:last');
-        loadData('all', 'works');
+        loadData('all', 'work');
     });
 
     $(".btnEditMaterial").click(function(event){

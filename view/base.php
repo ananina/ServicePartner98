@@ -36,12 +36,12 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Справочники<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="<?=FPATH?>page/open/clients">Клиенты</a></li>
+                            <li><a href="<?=FPATH?>page/open/client">Клиенты</a></li>
                             <li><a href="<?=FPATH?>page/open/type">Типы устройств</a></li>
                             <li><a href="<?=FPATH?>page/open/brend">Производители</a></li>
                             <li><a href="<?=FPATH?>page/open/location">Подразделения</a></li>
-                            <li><a href="<?=FPATH?>page/open/materials">Материалы</a></li>
-                            <li><a href="<?=FPATH?>page/open/works">Виды работ и цены</a></li>
+                            <li><a href="<?=FPATH?>page/open/material">Материалы</a></li>
+                            <li><a href="<?=FPATH?>page/open/work">Виды работ и цены</a></li>
                         </ul>
                     </li>
                     <li><a href="#">Выход</a></li>

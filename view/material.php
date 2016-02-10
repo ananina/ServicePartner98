@@ -9,7 +9,7 @@
                 <td></td>
             </tr>
             <?php foreach($params as $value){?>
-                <form action="<?=FPATH?>page/edit/materials/id_material/<?=$value['id_material']?>" method="post">
+                <form action="<?=FPATH?>page/edit/material/id_material/<?=$value['id_material']?>" method="post">
                     <tr>
                         <td><input type="text" class="form-control" name="material" disabled data-id="<?=$value['id_material']?>" value="<?=$value['material']?>"></td>
                         <td>
@@ -19,7 +19,7 @@
                     </tr>
                 </form>
             <?php }?>
-            <form action="<?=FPATH?>page/add/materials" method="post">
+            <form action="<?=FPATH?>page/add/material" method="post">
                 <tr id="newMaterial">
                     <td>
                         <div class="form-group">
@@ -36,7 +36,7 @@
 </div>
 
 <!-- Modal -->
-<form action="<?=FPATH?>page/edit/materials/id_material/" method="post">
+<form action="<?=FPATH?>page/edit/material/id_material/" method="post">
 <div class="modal fade" id="editMaterialModal" tabindex="-1" role="dialog" aria-labelledby="editMaterialLabel" aria-hidden="true">
     <div class="modal-dialog">
             <div class="modal-content">
@@ -56,7 +56,7 @@
 </div>
 </form>
 
-<form action="<?=FPATH?>page/edit/materials/id_material/" method="post">
+<form action="<?=FPATH?>page/edit/material/id_material/" method="post">
     <div class="modal fade" id="removeMaterialModal" tabindex="-1" role="dialog" aria-labelledby="removeMaterialLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
