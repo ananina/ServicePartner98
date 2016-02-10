@@ -9,16 +9,6 @@
                 <td>Цена, руб.</td>
                 <td></td>
             </tr>
-            <?php foreach($params as $value){?>
-                    <tr data-name="work">
-                        <td><input type="text" class="form-control" name="work" disabled data-path="<?=FPATH?>page/edit/work/id_work/<?=$value['id_work']?>" value="<?=$value['work']?>"></td>
-                        <td><input type="text" class="form-control" name="price" disabled value="<?=$value['price']?>"></td>
-                        <td>
-                            <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#removeModal">Удалить</button>
-                            <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#editModal">Редактировать</button>
-                        </td>
-                    </tr>
-            <?php }?>
             <form action="<?=FPATH?>page/add/work" method="post">
                 <tr data-name="newWork">
                     <td><div class="form-group">
@@ -34,6 +24,16 @@
                     </td>
                 </tr>
             </form>
+            <?php foreach($params as $value){?>
+                    <tr data-name="work">
+                        <td><input type="text" class="form-control" name="work" disabled data-path="<?=FPATH?>page/edit/work/id_work/<?=$value['id_work']?>" value="<?=$value['work']?>"></td>
+                        <td><input type="text" class="form-control" name="price" disabled value="<?=$value['price']?>"></td>
+                        <td>
+                            <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#removeModal">Удалить</button>
+                            <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#editModal">Редактировать</button>
+                        </td>
+                    </tr>
+            <?php }?>
         </table>
     </div>
 </div>

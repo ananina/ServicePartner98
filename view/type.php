@@ -8,15 +8,6 @@
                 <td>Наименование</td>
                 <td></td>
             </tr>
-            <?php foreach($params as $value){?>
-                    <tr data-name="type">
-                        <td><input type="text" class="form-control" name="type" disabled data-path="<?=FPATH?>page/edit/type/id_type/<?=$value['id_type']?>" value="<?=$value['type']?>"></td>
-                        <td>
-                            <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#removeModal">Удалить</button>
-                            <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#editModal">Редактировать</button>
-                        </td>
-                    </tr>
-            <?php }?>
             <form action="<?=FPATH?>page/add/type" method="post">
                 <tr data-name="newType">
                     <td><div class="form-group">
@@ -28,6 +19,15 @@
                     </td>
                 </tr>
             </form>
+            <?php foreach($params as $value){?>
+                    <tr data-name="type">
+                        <td><input type="text" class="form-control" name="type" disabled data-path="<?=FPATH?>page/edit/type/id_type/<?=$value['id_type']?>" value="<?=$value['type']?>"></td>
+                        <td>
+                            <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#removeModal">Удалить</button>
+                            <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#editModal">Редактировать</button>
+                        </td>
+                    </tr>
+            <?php }?>
         </table>
     </div>
 </div>

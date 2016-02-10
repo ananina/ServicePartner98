@@ -10,18 +10,6 @@
                 <td>Телефон</td>
                 <td></td>
             </tr>
-            <?php foreach($params as $value){?>
-                    <tr data-name="client">
-                        <td><input type="text" class="form-control" name="client" disabled data-path="<?=FPATH?>page/edit/client/id_client/<?=$value['id_client']?>" value="<?=$value['client']?>"></td>
-                        <td><input type="text" class="form-control" name="address" disabled value="<?=$value['address']?>"></td>
-                        <td><input type="text" class="form-control" name="tel" disabled value="<?=$value['tel']?>"></td>
-                        <td>
-                            <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#removeModal">Удалить</button>
-                            <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#editModal">Редактировать</button>
-                        </td>
-                    </tr>
-            <?php } ?>
-
             <form action="<?=FPATH?>page/add/client" method="post">
                 <tr data-name="newClient">
                     <td><div class="form-group">
@@ -41,6 +29,17 @@
                     </td>
                 </tr>
             </form>
+            <?php foreach($params as $value){?>
+                    <tr data-name="client">
+                        <td><input type="text" class="form-control" name="client" disabled data-path="<?=FPATH?>page/edit/client/id_client/<?=$value['id_client']?>" value="<?=$value['client']?>"></td>
+                        <td><input type="text" class="form-control" name="address" disabled value="<?=$value['address']?>"></td>
+                        <td><input type="text" class="form-control" name="tel" disabled value="<?=$value['tel']?>"></td>
+                        <td>
+                            <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#removeModal">Удалить</button>
+                            <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#editModal">Редактировать</button>
+                        </td>
+                    </tr>
+            <?php } ?>
         </table>
     </div>
 </div>
