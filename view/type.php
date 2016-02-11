@@ -3,15 +3,15 @@
         <h3 class="panel-title">Типы устройств</h3>
     </div>
     <div class="panel-body">
-        <table class="table table-hover">
+        <table class="table table-hover table-condensed">
             <tr>
                 <td>Наименование</td>
                 <td></td>
             </tr>
             <form action="<?=FPATH?>page/add/type" method="post">
-                <tr data-name="newType">
+                <tr>
                     <td><div class="form-group">
-                            <input type="text" class="form-control" name="type" data-name="newType" placeholder="Введите тип устройства...">
+                            <input type="text" class="form-control" name="type" data-name="add" placeholder="Введите тип устройства...">
                         </div>
                     </td>
                     <td><input type="submit" class="btn btn-default btnAdd" value="Добавить">

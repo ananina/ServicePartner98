@@ -3,15 +3,15 @@
         <h3 class="panel-title">Подразделения</h3>
     </div>
     <div class="panel-body">
-        <table class="table table-hover">
+        <table class="table table-hover table-condensed">
             <tr>
                 <td>Наименование</td>
                 <td></td>
             </tr>
             <form action="<?=FPATH?>page/add/location" method="post">
-                <tr data-name="newLocation">
+                <tr>
                     <td><div class="form-group">
-                            <input type="text" class="form-control" name="location" data-name="newLocation" placeholder="Введите название подразделения...">
+                            <input type="text" class="form-control" name="location" data-name="add" placeholder="Введите название подразделения...">
                         </div>
                     </td>
                     <td><input type="submit" class="btn btn-default btnAdd" value="Добавить">

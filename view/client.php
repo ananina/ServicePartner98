@@ -3,7 +3,7 @@
         <h3 class="panel-title">Клиенты</h3>
     </div>
     <div class="panel-body">
-        <table class="table table-hover">
+        <table class="table table-hover table-condensed">
             <tr>
                 <td>Наименование</td>
                 <td>Адрес</td>
@@ -11,17 +11,17 @@
                 <td></td>
             </tr>
             <form action="<?=FPATH?>page/add/client" method="post">
-                <tr data-name="newClient">
+                <tr>
                     <td><div class="form-group">
-                            <input type="text" class="form-control" name="client" data-name="newClient" placeholder="Введите название клиента...">
+                            <input type="text" class="form-control" name="client" data-name="add" placeholder="Введите название клиента...">
                         </div>
                     </td>
                     <td><div class="form-group">
-                            <input type="text" class="form-control" name="address" data-name="newClient" placeholder="Введите адрес...">
+                            <input type="text" class="form-control" name="address" data-name="add" placeholder="Введите адрес...">
                         </div>
                     </td>
                     <td><div class="form-group">
-                            <input type="text" class="form-control" name="tel" data-name="newClient" placeholder="Введите номер телефона...">
+                            <input type="text" class="form-control" name="tel" data-name="add" placeholder="Введите номер телефона...">
                         </div>
                     </td>
                     <td><input type="submit" class="btn btn-default btnAdd" value="Добавить">

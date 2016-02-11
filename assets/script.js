@@ -219,6 +219,7 @@ $(document).ready(function(){
         loadData('all', 'work');
     });
 
+    //обработка кнопок в справочниках
     $(".btnEdit").click(function(event){
         event.preventDefault();
         var nameManual = $(this).parent().parent().attr('data-name');
@@ -249,21 +250,27 @@ $(document).ready(function(){
 
     $('.btnAdd').click(function(event) {
         var btn = $(this);
-        var nameManual = btn.parent().parent().attr('data-name');
-        var content = btn.parent().parent().find('input:text');
-        $(content).each(function() {
-            if ($(this).val() == '') {
-                event.preventDefault();
+        var tr = btn.parent().parent();
+        var inputs = tr.find('input:text');
+        if(tr.find('input:text:first').val()==''){
+            event.preventDefault();
+            $(inputs).each(function() {
                 $(this).parent().addClass('has-error');
-                $('tr[data-name=' + nameManual + ']').addClass('danger');
+                tr.addClass('danger');
                 btn.next().removeAttr('hidden');
-            }
-        });
+            });
+        }
     });
 
-    $('input[data-name=newMaterial]').keydown(function(){
-        $(this).parent().removeClass('has-error');
-        $('tr[data-name=newMaterial]').removeClass('danger');
+    //убирает класс ошибки при заполнении поля в справочниках
+    $('input[data-name=add]').keydown(function(){
+        var tr = $(this).parent().parent().parent();
+        var inputs = tr.find('input:text');
+        $(inputs).each(function() {
+            $(this).parent().removeClass('has-error');
+        });
+        tr.removeClass('danger');
         $('.btnAdd').next().attr('hidden', 'hidden');
     });
+
 });

@@ -3,16 +3,16 @@
         <h3 class="panel-title">Материалы</h3>
     </div>
     <div class="panel-body">
-        <table class="table table-hover">
+        <table class="table table-hover table-condensed">
             <tr>
                 <td>Наименование</td>
                 <td></td>
             </tr>
             <form action="<?=FPATH?>page/add/material" method="post">
-                <tr data-name="newMaterial">
+                <tr>
                     <td>
                         <div class="form-group">
-                            <input type="text" class="form-control" name="material" data-name="newMaterial" placeholder="Введите название материала...">
+                            <input type="text" class="form-control" name="material" data-name="add" placeholder="Введите название материала...">
                         </div>
                     </td>
                     <td><input type="submit" class="btn btn-default btnAdd" value="Добавить">

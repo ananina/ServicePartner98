@@ -3,20 +3,20 @@
         <h3 class="panel-title">Работы и цены</h3>
     </div>
     <div class="panel-body">
-        <table class="table table-hover">
+        <table class="table table-hover table-condensed">
             <tr>
                 <td>Наименование работы</td>
                 <td>Цена, руб.</td>
                 <td></td>
             </tr>
             <form action="<?=FPATH?>page/add/work" method="post">
-                <tr data-name="newWork">
+                <tr>
                     <td><div class="form-group">
-                            <input type="text" class="form-control" name="work" data-name="newWork" placeholder="Введите название работы...">
+                            <input type="text" class="form-control" name="work" data-name="add" placeholder="Введите название работы...">
                         </div>
                     </td>
                     <td><div class="form-group">
-                            <input type="text" class="form-control" name="price" data-name="newWork" placeholder="Введите цену работы...">
+                            <input type="text" class="form-control" name="price" data-name="add" placeholder="Введите цену работы...">
                         </div>
                     </td>
                     <td><input type="submit" class="btn btn-default btnAdd" value="Добавить">
