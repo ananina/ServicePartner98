@@ -62,6 +62,7 @@ $(document).ready(function(){
                                     $('#tel_client').val(data['tel']);
                                     break;
                     case 'material':
+                                    $('<option>').attr('value', 'new').html('<button class="btn btn-default" data-toggle="modal" data-target="#addModal">Добавить...</button>').appendTo('select.selectMaterial:last');
                                     for(item in data){
                                         //console.log(data[item]);
                                         var idMaterial = data[item]['id_material'];
@@ -111,6 +112,7 @@ $(document).ready(function(){
                                     });
                                     break;
                     case 'work':
+                        $('<option>').attr('value', 'new').html('<button class="btn btn-default" data-toggle="modal" data-target="#addModal">Добавить...</button>').appendTo('select.selectWork:last');
                                     var work_price = [];
                                     for(item in data){
                                         var idWork = data[item]['id_work'];
@@ -193,6 +195,7 @@ $(document).ready(function(){
 
     $("select[name=id_status]").val('1');
 
+    //добавление материалов в новый документ
     $("#btnAddMaterials").click(function(){
         $('<tr>').appendTo('#tableMaterials');
         $('<td>').appendTo('#tableMaterials tr:last');
@@ -206,6 +209,7 @@ $(document).ready(function(){
         loadData('all', 'material');
     });
 
+    //добавление работ в новый документ
     $("#btnAddWorks").click(function(){
         $('<tr>').appendTo('#tableWorks');
         $('<td>').appendTo('#tableWorks tr:last');
@@ -225,19 +229,23 @@ $(document).ready(function(){
         var nameManual = $(this).parent().parent().attr('data-name');
         var name = $(this).parent().parent().find("input[name=" + nameManual + "]").val();
         var action = $(this).parent().parent().find("input[name=" + nameManual + "]").attr('data-path');
-        console.log(action);
         $('#editModal').parent().attr("action", '');
         $('#editModal').parent().attr("action", action);
         $('#editModal .table-modal tr').empty();
         var content = $(this).parent().parent().find('input');
-        console.log(content);
         $(content).each(function(){
             var nameElement = $(this).attr('name');
             var valueElement = $(this).attr('value');
-            console.log(nameElement, valueElement);
             $('<td>').appendTo($('.table-modal tr'));
             $('<input>').attr({"type":"text", "class":"form-control", "name":nameElement, "value":valueElement}).appendTo($('#editModal .table-modal td:last'));
         });
+        for(var i = 1; i <= 3; i++){
+            if($('div.panel' + i).length){
+                $('.modal-dialog').addClass('modal' + i);
+            }
+        }
+
+
     });
 
     $(".btnRemove").click(function(event) {
