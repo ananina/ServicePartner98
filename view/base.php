@@ -14,6 +14,7 @@
     <script src="<?=FPATH?>assets/bootstrap-3.3.6-dist/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="<?=FPATH?>assets/bootstrap-datepicker-master/dist/js/bootstrap-datepicker.min.js" type="text/javascript"></script>
     <script src="<?=FPATH?>assets/bootstrap-select-1.9.4/dist/js/bootstrap-select.min.js" type="text/javascript"></script>
+    <script src="<?=FPATH?>assets/jquery.maskedinput.min.js" type="text/javascript"></script>
     <script src="<?=FPATH?>assets/script.js" type="text/javascript"></script>
 </head>
 <body>

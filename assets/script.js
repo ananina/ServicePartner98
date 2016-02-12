@@ -162,36 +162,40 @@ $(document).ready(function(){
                                     break;
                 }
 
-                function isNumericPrice(elem){
-                    var str = elem.val();
-                    if(isNaN(str)){
-                        str = str.substring(0,str.length-1);
-                        elem.val(str);
-                    }else{
-                        var reg = /\d+(\.\d{3})/;
-                        if(reg.test(str)){
-                            str = str.substring(0,str.length-1);
-                            elem.val(str);
-                        }
-                    }
-                }
-                function isNumericCount(elem){
-                    var str = elem.val();
-                    if(isNaN(str)){
-                        str = str.substring(0,str.length-1);
-                        elem.val(str);
-                    }else{
-                        var reg = /\./;
-                        if(reg.test(str)){
-                            str = str.substring(0,str.length-1);
-                            elem.val(str);
-                        }
 
-                    }
-                }
             }
         });
     }
+
+    //проверка ввода чисел
+    function isNumericPrice(elem){
+        var str = elem.val();
+        if(isNaN(str)){
+            str = str.substring(0,str.length-1);
+            elem.val(str);
+        }else{
+            var reg = /\d+(\.\d{3})/;
+            if(reg.test(str)){
+                str = str.substring(0,str.length-1);
+                elem.val(str);
+            }
+        }
+    }
+    function isNumericCount(elem){
+        var str = elem.val();
+        if(isNaN(str)){
+            str = str.substring(0,str.length-1);
+            elem.val(str);
+        }else{
+            var reg = /\./;
+            if(reg.test(str)){
+                str = str.substring(0,str.length-1);
+                elem.val(str);
+            }
+
+        }
+    }
+
 
     $("select[name=id_status]").val('1');
 
@@ -245,6 +249,7 @@ $(document).ready(function(){
                 $('.modal-dialog').addClass('modal' + i);
             }
         }
+        $("input[name=tel]").mask("8-999-999-9999");
         $('#modalLabel').html('Редактирование');
         $('#modal input[type=submit]').val('Сохранить изменения');
     });
@@ -284,5 +289,14 @@ $(document).ready(function(){
         tr.removeClass('danger');
         $('.btnAdd').next().attr('hidden', 'hidden');
     });
+
+    $("input[name=price]").on("keyup", function(){
+        isNumericPrice($(this));
+    });
+
+    $("input[name=tel]").mask("8-999-999-9999");
+
+    $("input[name=date_begin]").mask("99.99.9999",{placeholder:"dd.mm.yyyy"});
+    $("input[name=date_end]").mask("99.99.9999",{placeholder:"dd.mm.yyyy"});
 
 });
