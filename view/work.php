@@ -29,8 +29,8 @@
                         <td><input type="text" class="form-control" name="work" disabled data-path="<?=FPATH?>page/edit/work/id_work/<?=$value['id_work']?>" value="<?=$value['work']?>"></td>
                         <td><input type="text" class="form-control" name="price" disabled value="<?=$value['price']?>"></td>
                         <td>
-                            <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#removeModal">Удалить</button>
-                            <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#editModal">Редактировать</button>
+                            <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#modal">Удалить</button>
+                            <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#modal">Редактировать</button>
                         </td>
                     </tr>
             <?php }?>

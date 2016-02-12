@@ -23,8 +23,8 @@
                     <tr data-name="location">
                         <td><input type="text" class="form-control" name="location" disabled data-path="<?=FPATH?>page/edit/location/id_location/<?=$value['id_location']?>" value="<?=$value['location']?>"></td>
                         <td>
-                            <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#removeModal">Удалить</button>
-                            <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#editModal">Редактировать</button>
+                            <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#modal">Удалить</button>
+                            <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#modal">Редактировать</button>
                         </td>
                     </tr>
             <?php }?>

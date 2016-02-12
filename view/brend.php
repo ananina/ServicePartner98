@@ -26,8 +26,8 @@
                             <tr data-name="brend">
                                 <td><input type="text" class="form-control" name="brend" disabled data-path="<?=FPATH?>page/edit/brend/id_brend/<?=$value['id_brend']?>" value="<?=$value['brend']?>"</td>
                                 <td>
-                                    <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#removeModal">Удалить</button>
-                                    <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#editModal">Редактировать</button>
+                                    <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#modal">Удалить</button>
+                                    <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#modal">Редактировать</button>
                                 </td>
                             </tr>
                         <?php }?>

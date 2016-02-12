@@ -35,8 +35,8 @@
                         <td><input type="text" class="form-control" name="address" disabled value="<?=$value['address']?>"></td>
                         <td><input type="text" class="form-control" name="tel" disabled value="<?=$value['tel']?>"></td>
                         <td>
-                            <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#removeModal">Удалить</button>
-                            <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#editModal">Редактировать</button>
+                            <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#modal">Удалить</button>
+                            <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#modal">Редактировать</button>
                         </td>
                     </tr>
             <?php } ?>

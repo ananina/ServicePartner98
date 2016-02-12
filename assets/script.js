@@ -229,31 +229,35 @@ $(document).ready(function(){
         var nameManual = $(this).parent().parent().attr('data-name');
         var name = $(this).parent().parent().find("input[name=" + nameManual + "]").val();
         var action = $(this).parent().parent().find("input[name=" + nameManual + "]").attr('data-path');
-        $('#editModal').parent().attr("action", '');
-        $('#editModal').parent().attr("action", action);
-        $('#editModal .table-modal tr').empty();
+        $('#modal').parent().attr("action", '');
+        $('#modal').parent().attr("action", action);
+        $('#modal .table-modal tr').empty();
         var content = $(this).parent().parent().find('input');
+        console.log(content);
         $(content).each(function(){
             var nameElement = $(this).attr('name');
             var valueElement = $(this).attr('value');
             $('<td>').appendTo($('.table-modal tr'));
-            $('<input>').attr({"type":"text", "class":"form-control", "name":nameElement, "value":valueElement}).appendTo($('#editModal .table-modal td:last'));
+            $('<input>').attr({"type":"text", "class":"form-control", "name":nameElement, "value":valueElement}).appendTo($('#modal .table-modal td:last'));
         });
         for(var i = 1; i <= 3; i++){
             if($('div.panel' + i).length){
                 $('.modal-dialog').addClass('modal' + i);
             }
         }
-
-
+        $('#modalLabel').html('Редактирование');
+        $('#modal input[type=submit]').val('Сохранить изменения');
     });
 
     $(".btnRemove").click(function(event) {
         event.preventDefault();
         var nameManual = $(this).parent().parent().attr('data-name');
         var action = $(this).parent().parent().find("input[name=" + nameManual + "]").attr('data-path');
-        $('#removeModal').parent().attr("action", '');
-        $('#removeModal').parent().attr("action", action);
+        $('#modal').parent().attr("action", '');
+        $('#modal').parent().attr("action", action);
+        $('<td>Вы уверены, что хотите удалить эту позицию?</td>').appendTo($('.table-modal tr'));
+        $('#modalLabel').html('Удаление');
+        $('#modal input[type=submit]').val('Удалить');
     });
 
     $('.btnAdd').click(function(event) {
