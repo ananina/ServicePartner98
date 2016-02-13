@@ -98,7 +98,7 @@
 
         <div role="tabpanel" class="tab-pane fade" id="materials-data">
             <button id="btnAddMaterials" type="button" class="btn btn-primary btn-lg">Добавить</button>
-            <table id="tableMaterials" class="table table-hover">
+            <table id="tableMaterials" class="table table-hover" data-path="<?=FPATH?>page/add/material">
                 <tr>
                     <td>Наименование</td>
                     <td>Цена, руб.</td>
@@ -125,23 +125,4 @@
     <button type="submit" class="btn btn-default" name="cancel">Отмена</button>
 </form>
 
-<!-- Modal
-<div class="modal fade" id="modalMaterials" tabindex="-1" role="dialog" aria-labelledby="labelModalMaterials">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="labelModalMaterials">Выберите материалы...</h4>
-            </div>
-            <div id="choiceMaterials" class="modal-body">
-                <div class="checkbox">
-                    <ul></ul>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                <button type="button" class="btn btn-primary">Выбрать</button>
-            </div>
-        </div>
-    </div>
-</div>-->
+<?=$content?>

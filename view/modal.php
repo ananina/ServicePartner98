@@ -13,8 +13,8 @@
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                    <input type="submit" name="button" class="btn btn-default" value="">
+                    <button type="button" class="btn btn-default btn-cancel" data-dismiss="modal">Отмена</button>
+                    <input type="submit" class="btn btn-default" value="">
                 </div>
             </div>
         </div>

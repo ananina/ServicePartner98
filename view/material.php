@@ -22,10 +22,10 @@
             </form>
             <?php foreach($params as $value){?>
                     <tr data-name="material">
-                        <td><input type="text" class="form-control" name="material" disabled data-path="<?=FPATH?>page/edit/material/id_material/<?=$value['id_material']?>" value="<?=$value['material']?>"></td>
+                        <td><input type="text" class="form-control" name="material" disabled value="<?=$value['material']?>"></td>
                         <td>
-                            <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#modal">Удалить</button>
-                            <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#modal">Редактировать</button>
+                            <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#modal" data-path="<?=FPATH?>page/delete/material/id_material/<?=$value['id_material']?>">Удалить</button>
+                            <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#modal" data-path="<?=FPATH?>page/edit/material/id_material/<?=$value['id_material']?>">Редактировать</button>
                         </td>
                     </tr>
             <?php }?>

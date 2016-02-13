@@ -46,7 +46,8 @@ class C_Page extends C_Base
         }
         $number = max($lastNumber) + 1;
         $today = date("d.m.Y");
-        $this->content = $this->template("view/$pageName.php", ["clients" => $clients, "type" => $type, "brend" => $brend, "status" => $status, "location" => $location, "users" => $users, "number" => $number, "date" => $today]);
+        $content = $this->template("view/modal.php");
+        $this->content = $this->template("view/$pageName.php", ["clients" => $clients, "type" => $type, "brend" => $brend, "status" => $status, "location" => $location, "users" => $users, "number" => $number, "date" => $today, "content"=>$content]);
     }
 
     public function action_add(){
@@ -55,7 +56,6 @@ class C_Page extends C_Base
             $model = model::GetInstance();
             $id = $model->add($pageName, $_POST);
         }
-
         $this->action_open($pageName);
     }
 
@@ -64,22 +64,26 @@ class C_Page extends C_Base
         $idName = $this->params[3];
         $id = $this->params[4];
         $pageName = $this->params[2];
-        $button = $this->post('button');
 
         if ($id != NULL) {
-            switch($button){
-                case 'Удалить':
-                    $model = model::GetInstance();
-                    $model->delete($pageName, $idName, $id);
-                    break;
-                case 'Сохранить изменения':
                     $params = $_POST;
-                    unset($params['button']);
                     $model = model::GetInstance();
                     $model->edit($pageName, $idName, $id, $params);
-                    break;
-            }
             $this->action_open($pageName);
         }
     }
+    public function action_delete()
+    {
+        $idName = $this->params[3];
+        $id = $this->params[4];
+        $pageName = $this->params[2];
+
+        if ($id != NULL) {
+                    $model = model::GetInstance();
+                    $model->delete($pageName, $idName, $id);
+
+            $this->action_open($pageName);
+        }
+    }
+
 }

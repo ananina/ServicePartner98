@@ -21,10 +21,10 @@
             </form>
             <?php foreach($params as $value){?>
                     <tr data-name="location">
-                        <td><input type="text" class="form-control" name="location" disabled data-path="<?=FPATH?>page/edit/location/id_location/<?=$value['id_location']?>" value="<?=$value['location']?>"></td>
+                        <td><input type="text" class="form-control" name="location" disabled value="<?=$value['location']?>"></td>
                         <td>
-                            <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#modal">Удалить</button>
-                            <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#modal">Редактировать</button>
+                            <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#modal" data-path="<?=FPATH?>page/delete/location/id_location/<?=$value['id_location']?>">Удалить</button>
+                            <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#modal" data-path="<?=FPATH?>page/edit/location/id_location/<?=$value['id_location']?>">Редактировать</button>
                         </td>
                     </tr>
             <?php }?>

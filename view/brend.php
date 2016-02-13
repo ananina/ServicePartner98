@@ -24,10 +24,10 @@
 
                         <?php foreach($params as $value){?>
                             <tr data-name="brend">
-                                <td><input type="text" class="form-control" name="brend" disabled data-path="<?=FPATH?>page/edit/brend/id_brend/<?=$value['id_brend']?>" value="<?=$value['brend']?>"</td>
+                                <td><input type="text" class="form-control" name="brend" disabled value="<?=$value['brend']?>"</td>
                                 <td>
-                                    <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#modal">Удалить</button>
-                                    <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#modal">Редактировать</button>
+                                    <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#modal" data-path="<?=FPATH?>page/delete/brend/id_brend/<?=$value['id_brend']?>">Удалить</button>
+                                    <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#modal" data-path="<?=FPATH?>page/edit/brend/id_brend/<?=$value['id_brend']?>">Редактировать</button>
                                 </td>
                             </tr>
                         <?php }?>

@@ -31,12 +31,12 @@
             </form>
             <?php foreach($params as $value){?>
                     <tr data-name="client">
-                        <td><input type="text" class="form-control" name="client" disabled data-path="<?=FPATH?>page/edit/client/id_client/<?=$value['id_client']?>" value="<?=$value['client']?>"></td>
+                        <td><input type="text" class="form-control" name="client" disabled value="<?=$value['client']?>"></td>
                         <td><input type="text" class="form-control" name="address" disabled value="<?=$value['address']?>"></td>
                         <td><input type="text" class="form-control" name="tel" disabled value="<?=$value['tel']?>"></td>
                         <td>
-                            <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#modal">Удалить</button>
-                            <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#modal">Редактировать</button>
+                            <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#modal" data-path="<?=FPATH?>page/delete/client/id_client/<?=$value['id_client']?>">Удалить</button>
+                            <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#modal" data-path="<?=FPATH?>page/edit/client/id_client/<?=$value['id_client']?>">Редактировать</button>
                         </td>
                     </tr>
             <?php } ?>
