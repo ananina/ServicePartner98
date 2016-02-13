@@ -62,7 +62,6 @@ $(document).ready(function(){
                                     $('#tel_client').val(data['tel']);
                                     break;
                     case 'material':
-                                    $('<option>').attr('value', 'new').html('<button class="btn btn-default" data-toggle="modal" data-target="#addModal">Добавить...</button>').appendTo('select.selectMaterial:last');
                                     for(item in data){
                                         //console.log(data[item]);
                                         var idMaterial = data[item]['id_material'];
@@ -78,10 +77,23 @@ $(document).ready(function(){
                                         $(this).parent().parent().parent().find("input[name=materialPrice]").removeAttr('disabled');
                                         $(this).parent().parent().parent().find("input[name=materialCount]").val('1').removeAttr('disabled');
                                     });
+
+
                                     /* проверка значения
                                     $('select.selectMaterial').on('changed.bs.select', function (e) {
                                     console.log($(this).val());
                                     });*/
+                                    $('.btnAdd').on('click', function(event) {
+                                        event.preventDefault();
+                                        $('#modalLabel').html('Добавление материала');
+                                        $('#modal input[type=submit]').val('Добавить');
+                                        $('#modal .table-modal tr').empty();
+                                        $('#modal tr').append('<td>Наименование</td>');
+                                        $('#modal table').append('<tr><td><div class="form-group"><input type="text" class="form-control" name="material" data-name="add" placeholder="Введите название материала..."></div></td></tr>');
+                                        var path = $('#tableMaterials').attr('data-path');
+                                        $('#modal').parent().attr('action', path);
+
+                                    });
 
                                     $("input[name=materialPrice]").on("keyup", function(){
                                         isNumericPrice($(this));
@@ -204,6 +216,7 @@ $(document).ready(function(){
         $('<tr>').appendTo('#tableMaterials');
         $('<td>').appendTo('#tableMaterials tr:last');
         $('<select>').attr('class', 'selectMaterial').attr('name', 'material').appendTo('#tableMaterials td:last');
+        $('<button>').attr({"class":"btn btn-default btnAdd", "data-toggle":"modal", "data-target":"#modal"}).html('<span class="glyphicon glyphicon-plus"></span>').appendTo('#tableMaterials td:last');
         $('<td>').appendTo('#tableMaterials tr:last');
         $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'materialPrice').attr('disabled', 'disabled').appendTo('#tableMaterials td:last');
         $('<td>').appendTo('#tableMaterials tr:last');
@@ -232,7 +245,8 @@ $(document).ready(function(){
         event.preventDefault();
         var nameManual = $(this).parent().parent().attr('data-name');
         var name = $(this).parent().parent().find("input[name=" + nameManual + "]").val();
-        var action = $(this).parent().parent().find("input[name=" + nameManual + "]").attr('data-path');
+        //var action = $(this).parent().parent().find("input[name=" + nameManual + "]").attr('data-path');
+        var action = $(this).attr('data-path');
         $('#modal').parent().attr("action", '');
         $('#modal').parent().attr("action", action);
         $('#modal .table-modal tr').empty();
@@ -257,7 +271,8 @@ $(document).ready(function(){
     $(".btnRemove").click(function(event) {
         event.preventDefault();
         var nameManual = $(this).parent().parent().attr('data-name');
-        var action = $(this).parent().parent().find("input[name=" + nameManual + "]").attr('data-path');
+        //var action = $(this).parent().parent().find("input[name=" + nameManual + "]").attr('data-path');
+        var action = $(this).attr('data-path');
         $('#modal').parent().attr("action", '');
         $('#modal').parent().attr("action", action);
         $('<td>Вы уверены, что хотите удалить эту позицию?</td>').appendTo($('.table-modal tr'));
@@ -277,6 +292,10 @@ $(document).ready(function(){
                 btn.next().removeAttr('hidden');
             });
         }
+    });
+
+    $('.btn-cancel').click(function(){
+        $('#modal table tr').empty();
     });
 
     //убирает класс ошибки при заполнении поля в справочниках

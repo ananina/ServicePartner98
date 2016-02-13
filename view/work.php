@@ -26,11 +26,11 @@
             </form>
             <?php foreach($params as $value){?>
                     <tr data-name="work">
-                        <td><input type="text" class="form-control" name="work" disabled data-path="<?=FPATH?>page/edit/work/id_work/<?=$value['id_work']?>" value="<?=$value['work']?>"></td>
+                        <td><input type="text" class="form-control" name="work" disabled value="<?=$value['work']?>"></td>
                         <td><input type="text" class="form-control" name="price" disabled value="<?=$value['price']?>"></td>
                         <td>
-                            <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#modal">Удалить</button>
-                            <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#modal">Редактировать</button>
+                            <button class="btn btn-default btnRemove" data-toggle="modal" data-target="#modal" data-path="<?=FPATH?>page/delete/work/id_work/<?=$value['id_work']?>">Удалить</button>
+                            <button class="btn btn-default btnEdit" data-toggle="modal" data-target="#modal" data-path="<?=FPATH?>page/edit/work/id_work/<?=$value['id_work']?>">Редактировать</button>
                         </td>
                     </tr>
             <?php }?>
