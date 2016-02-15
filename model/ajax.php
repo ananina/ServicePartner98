@@ -38,7 +38,8 @@ if(isset($count)){
 
 if(isset($table) && isset($params)){
     $model = model::GetInstance();
-    $data = $model->add($table, $params);
+    $id = $model->add($table, $params);
+    print_r($id);
 }
 
 

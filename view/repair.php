@@ -23,27 +23,32 @@
             </fieldset>
             <fieldset>
                 <legend>Клиент</legend>
-                <p>Ф.И.О.: <select class="form-control" name="id_client" size="1" required">
-                    <option value="0" disabled>Выберите клиента...</option>
+                <p>Ф.И.О.: <select class="form-control select client" name="id_client" size="1" required">
                     <?php foreach($clients as $key=>$value){?>
-                    <option value="<?=$value['id_client']?>"><?=$value['client']?></option></p>
+                    <option value="<?=$value['id_client']?>"><?=$value['client']?></option>
                 <?php } ?>
                 </select>
+                <button data-name="client" class="btn btn-default btnPlus" data-toggle="modal" data-target="#modal"><span class="glyphicon glyphicon-plus"></span></button>
+                </p>
                 <p>Адрес: <input id="address_client" class="form-control" type="text" disabled></p>
                 <p>Номер телефона: <input id="tel_client" class="form-control" disabled type="text"></p>
             </fieldset>
             <fieldset>
                 <legend>Аппарат</legend>
-                <p>Тип <select class="form-control" name="id_type" size="1" required">
+                <p>Тип <select class="form-control select type" name="id_type" size="1" required">
                     <?php foreach($type as $key=>$value){?>
-                    <option value="<?=$value['id_type']?>"><?=$value['type']?></option></p>
+                    <option value="<?=$value['id_type']?>"><?=$value['type']?></option>
                 <?php } ?>
                 </select>
-                <p>Производитель <select class="form-control" name="id_brend" size="1" required">
+                <button data-name="type" class="btn btn-default btnPlus" data-toggle="modal" data-target="#modal"><span class="glyphicon glyphicon-plus"></span></button>
+                </p>
+                <p>Производитель <select class="form-control select brend" name="id_brend" size="1" required">
                     <?php foreach($brend as $key=>$value){?>
-                    <option value="<?=$value['id_brend']?>"><?=$value['brend']?></option></p>
+                    <option value="<?=$value['id_brend']?>"><?=$value['brend']?></option>
             <?php } ?>
                 </select>
+                <button data-name="brend" class="btn btn-default btnPlus" data-toggle="modal" data-target="#modal"><span class="glyphicon glyphicon-plus"></span></button>
+                </p>
                 <p>Модель <input class="form-control" type="text" name="model"</p>
                 <p>Серийный номер <input class="form-control" type="text" name="serial_number"</p>
                 <p>Двигатель <input class="form-control" type="text" name="motor"</p>
@@ -63,8 +68,7 @@
                         <span class="glyphicon glyphicon-th"></span>
                     </div>
                 </div>
-                <select class="form-control" name="id_status" size="1">
-                    <option value="0" disabled>Выберите статус...</option>
+                <select class="form-control select" name="id_status" size="1">
                     <?php foreach($status as $key=>$value){?>
                         <option value="<?=$value['id_status']?>"><?=$value['status']?></option>
                     <?php }?>
@@ -75,13 +79,13 @@
                 <textarea class="form-control" cols="10" rows="5" name="comment"></textarea>
             </fieldset>
             <span>Гарантия <input class="form-control" type="text" name="garant"> мес.  |</span>
-                    <span>Мастер <select class="form-control" name="id_user">
+                    <span>Мастер <select class="form-control select" name="id_user">
                             <?php foreach($users as $key=>$value){?>
                                 <option value="<?=$value['id_user']?>"><?=$value['user']?></option>
                             <?php }?>
                         </select>
                       |</span>
-                    <span>Подразделение <select class="form-control" name="id_location">
+                    <span>Подразделение <select class="form-control select" name="id_location">
                             <?php foreach($location as $key=>$value){?>
                                 <option value="<?=$value['id_location']?>"><?=$value['location']?></option>
                             <?php }?>

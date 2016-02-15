@@ -6,6 +6,7 @@ $(document).ready(function(){
         $(this).tab('show')
     });
 
+    //инициализация заполнения календаря
     $(".date-begin").datepicker({
         format: 'dd.mm.yyyy',
         autoclose: true
@@ -44,12 +45,14 @@ $(document).ready(function(){
         dateEnd();
     });
 
+    //выбор клиента из списка
     $("select[name=id_client]").val('0');
     $("select[name=id_client]").change(function() {
         var id = $(this).val();
         loadData('one', 'client', 'id_client', id);
     });
 
+    //Ajax-запрос из базы данных
     function loadData(count, table, id_name, id){
         $.ajax({
             type: "POST",
@@ -66,21 +69,21 @@ $(document).ready(function(){
                                         //console.log(data[item]);
                                         var idMaterial = data[item]['id_material'];
                                         var material = data[item]['material'];
-                                        $('<option>').attr('value', idMaterial).html(material).appendTo('select.selectMaterial:last');
+                                        $('<option>').attr('value', idMaterial).html(material).appendTo('select.material:last');
                                     }
-                                    $('select.selectMaterial').selectpicker({
+                                    $('select.material').selectpicker({
                                         liveSearch: true,
                                         title: 'Выберите материал...'
                                     });
 
-                                    $('select.selectMaterial').on('changed.bs.select', function () {
+                                    $('select.material').on('changed.bs.select', function () {
                                         $(this).parent().parent().parent().find("input[name=materialPrice]").removeAttr('disabled');
                                         $(this).parent().parent().parent().find("input[name=materialCount]").val('1').removeAttr('disabled');
                                     });
 
 
                                     /* проверка значения
-                                    $('select.selectMaterial').on('changed.bs.select', function (e) {
+                                    $('select.material').on('changed.bs.select', function (e) {
                                     console.log($(this).val());
                                     });*/
                                     $('.btnAdd').on('click', function(event) {
@@ -130,14 +133,14 @@ $(document).ready(function(){
                                         var work = data[item]['work'];
                                         var price = data[item]['price'];
                                         work_price[idWork] = price;
-                                        $('<option>').attr('value', idWork).html(work).appendTo('select.selectWork:last');
+                                        $('<option>').attr('value', idWork).html(work).appendTo('select.work:last');
                                     }
-                                    $('select.selectWork').selectpicker({
+                                    $('select.work').selectpicker({
                                         liveSearch: true,
                                         title: 'Выберите работу...'
                                     });
 
-                                    $('select.selectWork').on('changed.bs.select', function () {
+                                    $('select.work').on('changed.bs.select', function () {
                                         var id = $(this).val();
                                         $(this).parent().parent().parent().find("input[name=workPrice]").val(work_price[id]).removeAttr('disabled');
                                         $(this).parent().parent().parent().find("input[name=workCount]").val('1').removeAttr('disabled');
@@ -172,8 +175,6 @@ $(document).ready(function(){
                                     });
                                     break;
                 }
-
-
             }
         });
     }
@@ -208,14 +209,20 @@ $(document).ready(function(){
         }
     }
 
+    //живой поиск по спискам в документе
+    $('select.select').selectpicker({
+        liveSearch: true,
+        title: 'Выберите...'
+    });
 
+    //выбор статуса по-умолчанию
     $("select[name=id_status]").val('1');
 
     //добавление материалов в новый документ
     $("#btnAddMaterials").click(function(){
         $('<tr>').appendTo('#tableMaterials');
         $('<td>').appendTo('#tableMaterials tr:last');
-        $('<select>').attr('class', 'selectMaterial').attr('name', 'material').appendTo('#tableMaterials td:last');
+        $('<select>').attr('class', 'material').attr('name', 'material').appendTo('#tableMaterials td:last');
         $('<button>').attr({"data-name":"material", "class":"btn btn-default btnPlus", "data-toggle":"modal", "data-target":"#modal"}).html('<span class="glyphicon glyphicon-plus"></span>').appendTo('#tableMaterials td:last');
         $('<td>').appendTo('#tableMaterials tr:last');
         $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'materialPrice').attr('disabled', 'disabled').appendTo('#tableMaterials td:last');
@@ -235,7 +242,7 @@ $(document).ready(function(){
     $("#btnAddWorks").click(function(){
         $('<tr>').appendTo('#tableWorks');
         $('<td>').appendTo('#tableWorks tr:last');
-        $('<select>').attr('class', 'selectWork').attr('name', 'work').appendTo('#tableWorks td:last');
+        $('<select>').attr('class', 'work').attr('name', 'work').appendTo('#tableWorks td:last');
         $('<button>').attr({"data-name":"work", "class":"btn btn-default btnPlus", "data-toggle":"modal", "data-target":"#modal"}).html('<span class="glyphicon glyphicon-plus"></span>').appendTo('#tableWorks td:last');
         $('<td>').appendTo('#tableWorks tr:last');
         $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'workPrice').attr('disabled', 'disabled').appendTo('#tableWorks td:last');
@@ -251,7 +258,41 @@ $(document).ready(function(){
         loadData('all', 'work');
     });
 
+    //нажатие кнопки Плюс в документе
+    $('.btnPlus').on('click', function(event){
+        event.preventDefault();
+        plus($(this).attr('data-name'));
+    });
+
+    //обработка нажатия кнопки Плюс в документе
+    function plus(name){
+        switch (name) {
+            case 'material':
+                var modalPlus = new Modal('', 'Добавление материала', 'Сохранить');
+                modalPlus.createTable(['Наименование'], {material: ''});
+                break;
+            case 'work':
+                var modalPlus = new Modal('', 'Добавление работы', 'Сохранить');
+                modalPlus.createTable(['Наименование', 'Цена'], {work: '', 'price': ''});
+                break;
+            case 'client':
+                var modalPlus = new Modal('', 'Добавление клиента', 'Сохранить');
+                modalPlus.createTable(['Наименование', 'Адрес', 'Телефон'], {client: '', 'address': '', tel:''});
+                break;
+            case 'type':
+                var modalPlus = new Modal('', 'Добавление типа устройства', 'Сохранить');
+                modalPlus.createTable(['Наименование'], {type: ''});
+                break;
+            case 'brend':
+                var modalPlus = new Modal('', 'Добавление производителя', 'Сохранить');
+                modalPlus.createTable(['Наименование'], {brend: ''});
+                break;
+        }
+        modalPlus.changeButton(name);
+    }
+
     //обработка кнопок в справочниках
+    //обработка кнопки Редактировать (модальное окно)
     $(".btnEdit").click(function(event){
         event.preventDefault();
         var path = $(this).attr('data-path');
@@ -268,17 +309,17 @@ $(document).ready(function(){
             tableContent[$(this).attr('name')] = $(this).attr('value');
         });
         var modalRemove = new Modal(path, 'Редактирование', 'Сохранить');
-        modalRemove.create(tableHeader, tableContent);
+        modalRemove.createTable(tableHeader, tableContent);
     });
-
+    //обработка кнопки Удалить (модальное окно)
     $(".btnRemove").click(function(event) {
         event.preventDefault();
         var path = $(this).attr('data-path');
         var tableHeader = ['Вы уверены, что хотите удалить эту позицию?'];
         var modalRemove = new Modal(path, 'Удаление', 'Удалить');
-        modalRemove.create(tableHeader, '');
+        modalRemove.createTable(tableHeader, '');
     });
-
+    //обработка кнопки Добавить
     $('.btnAdd').click(function(event) {
         var btn = $(this);
         var tr = btn.parent().parent();
@@ -292,49 +333,6 @@ $(document).ready(function(){
             });
         }
     });
-
-    function plus(name){
-        console.log(name);
-        $('#modal table').empty();
-        $('#modal input[type=submit]').val('Сохранить');
-        $('#modal table').append('<tr><td>Наименование</td></tr>');
-        switch (name){
-            case 'material':
-                $('#modalLabel').html('Добавление материала');
-                $('#modal table').append('<tr><td></td></tr>');
-                $('<input>').attr('class', 'form-control').attr('type', 'text').attr('name', name).appendTo('#modal td:last');
-                $('#modal input[type=submit]').click(function(event){
-                    event.preventDefault();
-                    var value = $('#modal input[name=' + name +']').val();
-                    console.log(value);
-                    if(value){
-                        addData('material', {material:value});
-                    }
-                });
-                break;
-            case 'work':    $('#modalLabel').html('Добавление работы');
-                            $('#modal table tr:first').append('<td>Цена</td>');
-                            $('#modal table').append('<tr><td></td></tr>');
-                            $('<input>').attr('class', 'form-control').attr('type', 'text').attr('name', name).appendTo('#modal td:last');
-                            $('#modal table tr').append('<td>');
-                            $('<input>').attr('class', 'form-control').attr('type', 'text').attr('name', 'price').appendTo('#modal td:last');
-                            $('#modal input[type=submit]').click(function(event){
-                                event.preventDefault();
-                                var value = $('#modal input[name=' + name +']').val();
-                                var priceValue = $('#modal input[name=price]').val();
-                                console.log(value);
-                                if(value){
-                                    addData('work', {work:value, price:priceValue});
-                                }
-                            });
-                            break;
-            }
-    }
-
-    $('.btn-cancel').click(function(){
-        $('#modal table tr').empty();
-    });
-
     //убирает класс ошибки при заполнении поля в справочниках
     $('input[data-name=add]').keydown(function(){
         var tr = $(this).parent().parent().parent();
@@ -355,25 +353,12 @@ $(document).ready(function(){
     $("input[name=date_begin]").mask("99.99.9999",{placeholder:"dd.mm.yyyy"});
     $("input[name=date_end]").mask("99.99.9999",{placeholder:"dd.mm.yyyy"});
 
-    function addData(table, params) {
-        console.log(table, params);
-        $.ajax({
-            type: "POST",
-            url: "/ServicePartner98/model/ajax.php",
-            dataType: 'json',
-            data: {table: table, params: params},
-            success: function (data) {
-
-            }
-        });
-    }
-
     //класс Modal
     function Modal(path, header, button){
         var path = path;
         var header = header;
         var button = button;
-        this.create = function(tableHeader, tableContent){
+        this.createTable = function(tableHeader, tableContent){
             $('#modal').parent().attr('action', path);
             $('#modalLabel').html(header);
             $('#modal input:submit').val(button);
@@ -392,14 +377,62 @@ $(document).ready(function(){
                     $('#modal .table-modal input:last').val(value);
                 }
             }
+
+            //маска ввода номера телефона
             $("input[name=tel]").mask("8-999-999-9999");
-            if(header == 'Редактирование')
-            for(var i = 1; i <= 3; i++){
-                if($('div.panel' + i).length){
-                    $('.modal-dialog').addClass('modal' + i);
-                }
+
+            //ширина модального окна в зависимости от количества столбцов
+            for(var i = 1; i < 4; i++){
+                $('.modal-dialog').removeClass('modal' + i); //очистка старого значения
             }
-        }
+            var len = tableHeader.length;
+            if(len > 0){
+                $('.modal-dialog').addClass('modal' + len);
+            }
+
+            //добавление класса кнопки Сохранить и выполнение добавления в базу при нажатии на кнопку
+            this.changeButton = function(table){
+                $('#modal input:submit').addClass('btnSave');
+                $('#modal .btnSave').click(function(event){
+                    event.preventDefault();
+                    var inputs = $('#modal .table-modal tr:last input:text');
+                    var params = new Object();
+                    var validate = false;
+                    $(inputs).each(function(){
+                        var key = $(this).attr('name');
+                        var value = $(this).val();
+                        if(value){
+                            params[key] = value;
+                            validate = true;
+                        }else{
+                            validate = false;
+                            return false;
+                        }
+
+                    });
+                    if(validate){
+                        addData(table, params);
+                        $('#modal').modal('hide');
+                        console.log(table);
+                    }
+                });
+            }
+        };
     }
 
+    //Ajax-запрос на добавление в базу данных
+    function addData(table, params) {
+        console.log(table, params);
+        $.ajax({
+            type: "POST",
+            url: "/ServicePartner98/model/ajax.php",
+            dataType: 'json',
+            data: {table: table, params: params},
+            success: function (id) {
+                console.log(id);
+                $('select.' + table).append(('<option value=' + id + '>' + params[table] + '</option>'));
+                
+            }
+        });
+    }
 });
