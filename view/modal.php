@@ -9,7 +9,7 @@
                 </div>
                 <div class="modal-body">
                     <table class="table table-hover table-modal">
-                        <tr></tr>
+                        
                     </table>
                 </div>
                 <div class="modal-footer">

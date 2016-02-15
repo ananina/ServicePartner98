@@ -124,7 +124,6 @@ $(document).ready(function(){
                                     });
                                     break;
                     case 'work':
-                        $('<option>').attr('value', 'new').html('<button class="btn btn-default" data-toggle="modal" data-target="#addModal">Добавить...</button>').appendTo('select.selectWork:last');
                                     var work_price = [];
                                     for(item in data){
                                         var idWork = data[item]['id_work'];
@@ -179,6 +178,7 @@ $(document).ready(function(){
         });
     }
 
+
     //проверка ввода чисел
     function isNumericPrice(elem){
         var str = elem.val();
@@ -216,13 +216,18 @@ $(document).ready(function(){
         $('<tr>').appendTo('#tableMaterials');
         $('<td>').appendTo('#tableMaterials tr:last');
         $('<select>').attr('class', 'selectMaterial').attr('name', 'material').appendTo('#tableMaterials td:last');
-        $('<button>').attr({"class":"btn btn-default btnAdd", "data-toggle":"modal", "data-target":"#modal"}).html('<span class="glyphicon glyphicon-plus"></span>').appendTo('#tableMaterials td:last');
+        $('<button>').attr({"data-name":"material", "class":"btn btn-default btnPlus", "data-toggle":"modal", "data-target":"#modal"}).html('<span class="glyphicon glyphicon-plus"></span>').appendTo('#tableMaterials td:last');
         $('<td>').appendTo('#tableMaterials tr:last');
         $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'materialPrice').attr('disabled', 'disabled').appendTo('#tableMaterials td:last');
         $('<td>').appendTo('#tableMaterials tr:last');
         $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'materialCount').attr('disabled', 'disabled').appendTo('#tableMaterials td:last');
         $('<td>').appendTo('#tableMaterials tr:last');
         $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'materialSumm').attr('disabled', 'disabled').appendTo('#tableMaterials td:last');
+
+        $('.btnPlus').on('click', function(event){
+            event.preventDefault();
+            plus($(this).attr('data-name'));
+        });
         loadData('all', 'material');
     });
 
@@ -231,53 +236,47 @@ $(document).ready(function(){
         $('<tr>').appendTo('#tableWorks');
         $('<td>').appendTo('#tableWorks tr:last');
         $('<select>').attr('class', 'selectWork').attr('name', 'work').appendTo('#tableWorks td:last');
+        $('<button>').attr({"data-name":"work", "class":"btn btn-default btnPlus", "data-toggle":"modal", "data-target":"#modal"}).html('<span class="glyphicon glyphicon-plus"></span>').appendTo('#tableWorks td:last');
         $('<td>').appendTo('#tableWorks tr:last');
         $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'workPrice').attr('disabled', 'disabled').appendTo('#tableWorks td:last');
         $('<td>').appendTo('#tableWorks tr:last');
         $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'workCount').attr('disabled', 'disabled').appendTo('#tableWorks td:last');
         $('<td>').appendTo('#tableWorks tr:last');
         $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'workSumm').attr('disabled', 'disabled').appendTo('#tableWorks td:last');
+
+        $('.btnPlus').on('click', function(event){
+            event.preventDefault();
+            plus($(this).attr('data-name'));
+        });
         loadData('all', 'work');
     });
 
     //обработка кнопок в справочниках
     $(".btnEdit").click(function(event){
         event.preventDefault();
-        var nameManual = $(this).parent().parent().attr('data-name');
-        var name = $(this).parent().parent().find("input[name=" + nameManual + "]").val();
-        //var action = $(this).parent().parent().find("input[name=" + nameManual + "]").attr('data-path');
-        var action = $(this).attr('data-path');
-        $('#modal').parent().attr("action", '');
-        $('#modal').parent().attr("action", action);
-        $('#modal .table-modal tr').empty();
-        var content = $(this).parent().parent().find('input');
-        console.log(content);
-        $(content).each(function(){
-            var nameElement = $(this).attr('name');
-            var valueElement = $(this).attr('value');
-            $('<td>').appendTo($('.table-modal tr'));
-            $('<input>').attr({"type":"text", "class":"form-control", "name":nameElement, "value":valueElement}).appendTo($('#modal .table-modal td:last'));
-        });
-        for(var i = 1; i <= 3; i++){
-            if($('div.panel' + i).length){
-                $('.modal-dialog').addClass('modal' + i);
+        var path = $(this).attr('data-path');
+        var labels = $(this).parents('.table-main').find('tr:first').children();
+        var tableHeader = [];
+        $(labels).each(function() {
+            if($(this).text()){
+                tableHeader.push($(this).text());
             }
-        }
-        $("input[name=tel]").mask("8-999-999-9999");
-        $('#modalLabel').html('Редактирование');
-        $('#modal input[type=submit]').val('Сохранить изменения');
+        });
+        var inputs = $(this).parent().parent().find('input');
+        var tableContent = new Object();
+        $(inputs).each(function(){
+            tableContent[$(this).attr('name')] = $(this).attr('value');
+        });
+        var modalRemove = new Modal(path, 'Редактирование', 'Сохранить');
+        modalRemove.create(tableHeader, tableContent);
     });
 
     $(".btnRemove").click(function(event) {
         event.preventDefault();
-        var nameManual = $(this).parent().parent().attr('data-name');
-        //var action = $(this).parent().parent().find("input[name=" + nameManual + "]").attr('data-path');
-        var action = $(this).attr('data-path');
-        $('#modal').parent().attr("action", '');
-        $('#modal').parent().attr("action", action);
-        $('<td>Вы уверены, что хотите удалить эту позицию?</td>').appendTo($('.table-modal tr'));
-        $('#modalLabel').html('Удаление');
-        $('#modal input[type=submit]').val('Удалить');
+        var path = $(this).attr('data-path');
+        var tableHeader = ['Вы уверены, что хотите удалить эту позицию?'];
+        var modalRemove = new Modal(path, 'Удаление', 'Удалить');
+        modalRemove.create(tableHeader, '');
     });
 
     $('.btnAdd').click(function(event) {
@@ -293,6 +292,44 @@ $(document).ready(function(){
             });
         }
     });
+
+    function plus(name){
+        console.log(name);
+        $('#modal table').empty();
+        $('#modal input[type=submit]').val('Сохранить');
+        $('#modal table').append('<tr><td>Наименование</td></tr>');
+        switch (name){
+            case 'material':
+                $('#modalLabel').html('Добавление материала');
+                $('#modal table').append('<tr><td></td></tr>');
+                $('<input>').attr('class', 'form-control').attr('type', 'text').attr('name', name).appendTo('#modal td:last');
+                $('#modal input[type=submit]').click(function(event){
+                    event.preventDefault();
+                    var value = $('#modal input[name=' + name +']').val();
+                    console.log(value);
+                    if(value){
+                        addData('material', {material:value});
+                    }
+                });
+                break;
+            case 'work':    $('#modalLabel').html('Добавление работы');
+                            $('#modal table tr:first').append('<td>Цена</td>');
+                            $('#modal table').append('<tr><td></td></tr>');
+                            $('<input>').attr('class', 'form-control').attr('type', 'text').attr('name', name).appendTo('#modal td:last');
+                            $('#modal table tr').append('<td>');
+                            $('<input>').attr('class', 'form-control').attr('type', 'text').attr('name', 'price').appendTo('#modal td:last');
+                            $('#modal input[type=submit]').click(function(event){
+                                event.preventDefault();
+                                var value = $('#modal input[name=' + name +']').val();
+                                var priceValue = $('#modal input[name=price]').val();
+                                console.log(value);
+                                if(value){
+                                    addData('work', {work:value, price:priceValue});
+                                }
+                            });
+                            break;
+            }
+    }
 
     $('.btn-cancel').click(function(){
         $('#modal table tr').empty();
@@ -317,5 +354,52 @@ $(document).ready(function(){
 
     $("input[name=date_begin]").mask("99.99.9999",{placeholder:"dd.mm.yyyy"});
     $("input[name=date_end]").mask("99.99.9999",{placeholder:"dd.mm.yyyy"});
+
+    function addData(table, params) {
+        console.log(table, params);
+        $.ajax({
+            type: "POST",
+            url: "/ServicePartner98/model/ajax.php",
+            dataType: 'json',
+            data: {table: table, params: params},
+            success: function (data) {
+
+            }
+        });
+    }
+
+    //класс Modal
+    function Modal(path, header, button){
+        var path = path;
+        var header = header;
+        var button = button;
+        this.create = function(tableHeader, tableContent){
+            $('#modal').parent().attr('action', path);
+            $('#modalLabel').html(header);
+            $('#modal input:submit').val(button);
+            $('#modal .table-modal').empty();
+            if(tableHeader){
+                $('#modal .table-modal').append('<tr>');
+                for(var i = 0; i < tableHeader.length; i++){
+                    $('#modal .table-modal tr:last').append($('<td>' + tableHeader[i] + '</td>'));
+                }
+            }
+            if(tableContent){
+                $('#modal .table-modal').append('<tr>');
+                for(item in tableContent){
+                    var value = tableContent[item];
+                    $('#modal .table-modal tr:last').append($('<td><input type="text" class="form-control" name=' + item + '></td>'));
+                    $('#modal .table-modal input:last').val(value);
+                }
+            }
+            $("input[name=tel]").mask("8-999-999-9999");
+            if(header == 'Редактирование')
+            for(var i = 1; i <= 3; i++){
+                if($('div.panel' + i).length){
+                    $('.modal-dialog').addClass('modal' + i);
+                }
+            }
+        }
+    }
 
 });
