@@ -3,7 +3,7 @@
         <h3 class="panel-title">Производители</h3>
     </div>
     <div class="panel-body">
-        <table class="table table-condensed">
+        <table class="table table-condensed table-main">
             <tr>
                 <td>Наименование</td>
                 <td></td>

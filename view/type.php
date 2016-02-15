@@ -3,7 +3,7 @@
         <h3 class="panel-title">Типы устройств</h3>
     </div>
     <div class="panel-body">
-        <table class="table table-hover table-condensed">
+        <table class="table table-hover table-condensed table-main">
             <tr>
                 <td>Наименование</td>
                 <td></td>
