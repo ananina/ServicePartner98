@@ -13,6 +13,9 @@ if(!empty($_POST['id_name'])){
 if(!empty($_POST['id'])){
     $id = (int)$_POST['id'];
 }
+if(!empty($_POST['params'])){
+    $params = ($_POST['params']);
+}
 
 if(isset($count)){
     if($count == 'one'){
@@ -31,6 +34,11 @@ if(isset($count)){
             exit;
         }
     }
+}
+
+if(isset($table) && isset($params)){
+    $model = model::GetInstance();
+    $data = $model->add($table, $params);
 }
 
 
