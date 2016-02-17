@@ -34,3 +34,20 @@ input.count{
 .modal3{
     width: 850px;
 }
+
+div.tab-content{
+    width: 800px;
+    margin: auto;
+}
+p.total{
+    width: 800px;
+    margin: 20px auto;
+    text-align: right;
+    color: #d0e9c6;
+    font-style: oblique;
+    font-size: large;
+}
+.btn-form{
+    float: right;
+    margin-left: 10px;
+}
