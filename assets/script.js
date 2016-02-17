@@ -73,12 +73,14 @@ $(document).ready(function(){
                                     }
                                     $('select.material').selectpicker({
                                         liveSearch: true,
-                                        title: 'Выберите материал...'
+                                        title: 'Выберите материал...',
+                                        size: 5
                                     });
 
                                     $('select.material').on('changed.bs.select', function () {
                                         $(this).parent().parent().parent().find("input[name=materialPrice]").removeAttr('disabled');
                                         $(this).parent().parent().parent().find("input[name=materialCount]").val('1').removeAttr('disabled');
+                                        summa(table, ($(this).closest('tr')));
                                     });
 
 
@@ -106,24 +108,10 @@ $(document).ready(function(){
                                     });
 
                                     $("input[name=materialPrice]").on("blur", function(){
-                                        var price = (+$(this).val()).toFixed(2);
-                                        $(this).val(price);
-                                        var count = $(this).parent().parent().find('input[name=materialCount]').val();
-                                        if(count != ''){
-                                            var summ = ($(this).val() * count).toFixed(2);
-                                            $(this).parent().parent().find('input[name=materialSumm]').val(summ);
-                                        }else{
-                                            $(this).parent().parent().find('input[name=materialSumm]').val('');
-                                        }
+                                        summa('material', ($(this).closest('tr')));
                                     });
                                     $("input[name=materialCount]").on("blur", function(){
-                                        var price = $(this).parent().parent().find('input[name=materialPrice]').val();
-                                        if(price != ''){
-                                            var summ = ($(this).val() * price).toFixed(2);
-                                            $(this).parent().parent().find('input[name=materialSumm]').val(summ);
-                                        }else{
-                                            $(this).parent().parent().find('input[name=materialSumm]').val('');
-                                        }
+                                        summa(table, ($(this).closest('tr')));
                                     });
                                     break;
                     case 'work':
@@ -137,14 +125,16 @@ $(document).ready(function(){
                                     }
                                     $('select.work').selectpicker({
                                         liveSearch: true,
-                                        title: 'Выберите работу...'
+                                        title: 'Выберите работу...',
+                                        size: 5
                                     });
 
                                     $('select.work').on('changed.bs.select', function () {
                                         var id = $(this).val();
                                         $(this).parent().parent().parent().find("input[name=workPrice]").val(work_price[id]).removeAttr('disabled');
                                         $(this).parent().parent().parent().find("input[name=workCount]").val('1').removeAttr('disabled');
-                                     });
+                                        summa(table, ($(this).closest('tr')));
+                                    });
 
                                     $("input[name=workPrice]").on("keyup", function(){
                                         isNumericPrice($(this));
@@ -154,24 +144,10 @@ $(document).ready(function(){
                                     });
 
                                     $("input[name=workPrice]").on("blur", function(){
-                                        var price = (+$(this).val()).toFixed(2);
-                                        $(this).val(price);
-                                        var count = $(this).parent().parent().find('input[name=workCount]').val();
-                                        if(count != ''){
-                                            var summ = ($(this).val() * count).toFixed(2);
-                                            $(this).parent().parent().find('input[name=workSumm]').val(summ);
-                                        }else{
-                                            $(this).parent().parent().find('input[name=workSumm]').val('');
-                                        }
+                                        summa(table, ($(this).closest('tr')));
                                     });
                                     $("input[name=workCount]").on("blur", function(){
-                                        var price = $(this).parent().parent().find('input[name=workPrice]').val();
-                                        if(price != ''){
-                                            var summ = ($(this).val() * price).toFixed(2);
-                                            $(this).parent().parent().find('input[name=workSumm]').val(summ);
-                                        }else{
-                                            $(this).parent().parent().find('input[name=workSumm]').val('');
-                                        }
+                                        summa(table, ($(this).closest('tr')));
                                     });
                                     break;
                 }
@@ -179,6 +155,22 @@ $(document).ready(function(){
         });
     }
 
+    //сумма материалов и работ
+    function summa(name, tr){
+        var price = tr.find('input[name=' + name + 'Price]').val();
+        var count = tr.find('input[name=' + name + 'Count]').val();
+        if(price && count){
+            var summ = (price * count).toFixed(2);
+        }else{
+            summ = 0;
+        }
+        tr.find('input[name=' + name + 'Summ]').val(summ);
+        var total = 0;
+        $(tr.parent().find('input[name=' + name + 'Summ]')).each(function(){
+            total += +$(this).val();
+        });
+        $('p.' + name).text('Итого: ' + total + 'руб.');
+    }
 
     //проверка ввода чисел
     function isNumericPrice(elem){
@@ -212,7 +204,9 @@ $(document).ready(function(){
     //живой поиск по спискам в документе
     $('select.select').selectpicker({
         liveSearch: true,
-        title: 'Выберите...'
+        title: 'Выберите...',
+        width: '250px',
+        size: 5
     });
 
     //выбор статуса по-умолчанию
@@ -233,6 +227,7 @@ $(document).ready(function(){
 
         $('.btnPlus').on('click', function(event){
             event.preventDefault();
+            $(this).prev().find('select').addClass('action');
             plus($(this).attr('data-name'));
         });
         loadData('all', 'material');
@@ -253,6 +248,7 @@ $(document).ready(function(){
 
         $('.btnPlus').on('click', function(event){
             event.preventDefault();
+            $(this).prev().find('select').addClass('action');
             plus($(this).attr('data-name'));
         });
         loadData('all', 'work');
@@ -261,6 +257,7 @@ $(document).ready(function(){
     //нажатие кнопки Плюс в документе
     $('.btnPlus').on('click', function(event){
         event.preventDefault();
+        $(this).prev().find('select').addClass('action');
         plus($(this).attr('data-name'));
     });
 
@@ -413,7 +410,6 @@ $(document).ready(function(){
                     if(validate){
                         addData(table, params);
                         $('#modal').modal('hide');
-                        console.log(table);
                     }
                 });
             }
@@ -422,16 +418,23 @@ $(document).ready(function(){
 
     //Ajax-запрос на добавление в базу данных
     function addData(table, params) {
-        console.log(table, params);
         $.ajax({
             type: "POST",
             url: "/ServicePartner98/model/ajax.php",
             dataType: 'json',
             data: {table: table, params: params},
             success: function (id) {
-                console.log(id);
+                //выбор в селект только что добавленной позиции
                 $('select.' + table).append(('<option value=' + id + '>' + params[table] + '</option>'));
-                
+                $('select.' + table).selectpicker('refresh');
+                $('select.action').selectpicker('val', id);
+                $('select.action').parent().parent().parent().find('input[name=' + table + 'Price]').val(params['price']).removeAttr('disabled');
+                $('select.action').parent().parent().parent().find('input[name=' + table + 'Count]').val('1').removeAttr('disabled');
+                $('select.action').parent().parent().parent().find('#address_' + table).val(params['address']);
+                $('select.action').parent().parent().parent().find('#tel_' + table).val(params['tel']);
+                summa(table, ($('select.action').closest('tr')));
+                $('select.action').removeClass('action');
+
             }
         });
     }

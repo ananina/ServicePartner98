@@ -110,6 +110,7 @@
                     <td>Сумма, руб.</td>
                 </tr>
             </table>
+            <p class="total material"></p>
         </div>
 
         <div role="tabpanel" class="tab-pane fade" id="works-data">
@@ -122,11 +123,13 @@
                     <td>Сумма, руб.</td>
                 </tr>
             </table>
+            <p class="total work"></p>
         </div>
+        <button type="submit" class="btn btn-default btn-form" name="save">Сохранить</button>
+        <button type="submit" class="btn btn-default btn-form" name="cancel">Отмена</button>
     </div>
 
-    <button type="submit" class="btn btn-default" name="save">Сохранить</button>
-    <button type="submit" class="btn btn-default" name="cancel">Отмена</button>
+
 </form>
 
 <?=$content?>
