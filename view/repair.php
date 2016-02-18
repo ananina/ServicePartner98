@@ -9,9 +9,8 @@
 
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade in active" id="repair-data">
-            <fieldset>
+            <fieldset id="fieldsetDetails">
                 <legend>Реквизиты</legend>
-
                 <p>Дата: <div class="input-group date date-begin" data-provide="datepicker">
                     <input type="text" class="form-control dateBegin" name="date_begin" value="<?=$date?>">
                     <div class="input-group-addon">
@@ -21,46 +20,50 @@
                 </p>
                 <p>Номер: <input class="form-control" type="text" name="number" value="<?=$number?>"></p>
             </fieldset>
-            <fieldset>
+            <fieldset id="fieldsetClient">
                 <legend>Клиент</legend>
-                <p>Ф.И.О.: <select class="form-control select client" name="id_client" size="1" required">
+                <p>Ф.И.О.: <p><select class="form-control select client" name="id_client" size="1" required">
                     <?php foreach($clients as $key=>$value){?>
                     <option value="<?=$value['id_client']?>"><?=$value['client']?></option>
                 <?php } ?>
                 </select>
                 <button data-name="client" class="btn btn-default btnPlus" data-toggle="modal" data-target="#modal"><span class="glyphicon glyphicon-plus"></span></button>
-                </p>
+                </p></p>
                 <p>Адрес: <input id="address_client" class="form-control" type="text" disabled></p>
                 <p>Номер телефона: <input id="tel_client" class="form-control" disabled type="text"></p>
             </fieldset>
-            <fieldset>
-                <legend>Аппарат</legend>
-                <p>Тип <select class="form-control select type" name="id_type" size="1" required">
-                    <?php foreach($type as $key=>$value){?>
-                    <option value="<?=$value['id_type']?>"><?=$value['type']?></option>
-                <?php } ?>
-                </select>
-                <button data-name="type" class="btn btn-default btnPlus" data-toggle="modal" data-target="#modal"><span class="glyphicon glyphicon-plus"></span></button>
-                </p>
-                <p>Производитель <select class="form-control select brend" name="id_brend" size="1" required">
-                    <?php foreach($brend as $key=>$value){?>
-                    <option value="<?=$value['id_brend']?>"><?=$value['brend']?></option>
-            <?php } ?>
-                </select>
-                <button data-name="brend" class="btn btn-default btnPlus" data-toggle="modal" data-target="#modal"><span class="glyphicon glyphicon-plus"></span></button>
-                </p>
-                <p>Модель <input class="form-control" type="text" name="model"</p>
-                <p>Серийный номер <input class="form-control" type="text" name="serial_number"</p>
-                <p>Двигатель <input class="form-control" type="text" name="motor"</p>
-                <p>U = <input class="form-control" type="text" name="U"</p>
-                <p>I = <input class="form-control" type="text" name="I"</p>
-                <p>W = <input class="form-control" type="text" name="W"</p>
-            </fieldset>
-            <fieldset>
+            <fieldset id="fieldsetProblem">
                 <legend>Неисправность</legend>
-                <textarea class="form-control" cols="10" rows="5" name="problem"></textarea>
+                <textarea class="form-control" cols="10" rows="9" name="problem"></textarea>
             </fieldset>
-            <fieldset>
+            <fieldset id="fieldsetType">
+                <legend>Аппарат</legend>
+                <div class="divType">
+                    <p>Тип <p><select class="form-control select type" name="id_type" size="1" required">
+                        <?php foreach($type as $key=>$value){?>
+                            <option value="<?=$value['id_type']?>"><?=$value['type']?></option>
+                        <?php } ?>
+                        </select>
+                        <button data-name="type" class="btn btn-default btnPlus" data-toggle="modal" data-target="#modal"><span class="glyphicon glyphicon-plus"></span></button>
+                    </p></p>
+                    <p>Модель <input class="form-control" type="text" name="model"</p>
+                    <p>Серийный номер <input class="form-control" type="text" name="serial_number"</p>
+                    <p>Двигатель <input class="form-control" type="text" name="motor"</p>
+                </div>
+                <div class="divType">
+                    <p>Производитель <p><select class="form-control select brend" name="id_brend" size="1" required">
+                        <?php foreach($brend as $key=>$value){?>
+                            <option value="<?=$value['id_brend']?>"><?=$value['brend']?></option>
+                        <?php } ?>
+                        </select>
+                        <button data-name="brend" class="btn btn-default btnPlus" data-toggle="modal" data-target="#modal"><span class="glyphicon glyphicon-plus"></span></button>
+                    </p></p>
+                    <p>U = <input class="form-control" type="text" name="U"</p>
+                    <p>I = <input class="form-control" type="text" name="I"</p>
+                    <p>W = <input class="form-control" type="text" name="W"</p>
+                </div>
+            </fieldset>
+            <fieldset id="fieldsetStatus">
                 <legend>Статус</legend>
                 <div class="input-group date date-end" data-provide="datepicker">
                     <input type="text" class="form-control dateBegin" name="date_end" value="<?=$date?>">
@@ -68,36 +71,36 @@
                         <span class="glyphicon glyphicon-th"></span>
                     </div>
                 </div>
-                <select class="form-control select" name="id_status" size="1">
+                <p><select class="form-control select" name="id_status" size="1">
                     <?php foreach($status as $key=>$value){?>
                         <option value="<?=$value['id_status']?>"><?=$value['status']?></option>
                     <?php }?>
-                </select>
+                </select></p>
             </fieldset>
-            <fieldset>
+            <fieldset id="fieldsetComment">
                 <legend>Комментарий</legend>
-                <textarea class="form-control" cols="10" rows="5" name="comment"></textarea>
+                <textarea class="form-control" cols="10" rows="6" name="comment"></textarea>
             </fieldset>
-            <span>Гарантия <input class="form-control" type="text" name="garant"> мес.  |</span>
-                    <span>Мастер <select class="form-control select" name="id_user">
-                            <?php foreach($users as $key=>$value){?>
-                                <option value="<?=$value['id_user']?>"><?=$value['user']?></option>
-                            <?php }?>
-                        </select>
-                      |</span>
-                    <span>Подразделение <select class="form-control select" name="id_location">
-                            <?php foreach($location as $key=>$value){?>
-                                <option value="<?=$value['id_location']?>"><?=$value['location']?></option>
-                            <?php }?>
-                        </select>
-                            |</span>
-            <span>Дата окончания ремонта <div class="input-group date date-end" data-provide="datepicker">
+            <div class="float">Гарантия,  мес.<input class="form-control garant" type="number" min="0" max="12" name="garant"></div>
+            <div class="float">Мастер <p><select class="form-control select" name="id_user">
+                        <?php foreach($users as $key=>$value){?>
+                            <option value="<?=$value['id_user']?>"><?=$value['user']?></option>
+                        <?php }?>
+                    </select></p>
+            </div>
+            <div class="float">Подразделение <p><select class="form-control select" name="id_location">
+                        <?php foreach($location as $key=>$value){?>
+                            <option value="<?=$value['id_location']?>"><?=$value['location']?></option>
+                        <?php }?>
+                    </select></p>
+            </div>
+            <div>Дата окончания ремонта <div class="input-group date date-end" data-provide="datepicker">
                     <input type="text" class="form-control dateEnd" name="date_end">
                     <div class="input-group-addon">
                         <span class="glyphicon glyphicon-th"></span>
                     </div>
                 </div>
-            </span>
+            </div>
         </div>
 
         <div role="tabpanel" class="tab-pane fade" id="materials-data">

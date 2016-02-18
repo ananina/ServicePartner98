@@ -1,8 +1,50 @@
 body{
     background-color: #1b6d85;
 }
+fieldset{
+    border: 1px solid transparent;
+}
+#fieldsetDetails{
+    width: 260px;
+    height: 255px;
+    float: left;
+}
+#fieldsetClient{
+    width: 300px;
+    height: 255px;
+    float: left;
+}
+#fieldsetProblem{
+    width: 300px;
+    height: 255px;
+    float: left;
+}
+#fieldsetType{
+    width: 610px;
+    height: 320px;
+    float: left;
+}
+.divType{
+    float: left;
+    margin-right: 10px;
+}
+#fieldsetComment{
+    float: left;
+    width: 250px;
+    height: 190px;
+}
+div.float{
+    float: left;
+    margin-right: 10px;
+}
+div.date{
+    width: 230px;
+}
 input.form-control{
     width: 250px;
+}
+input.garant{
+    width: 100px;
 }
 .input-group{
     width: 250px;
@@ -34,13 +76,15 @@ input.count{
 .modal3{
     width: 850px;
 }
-
+div.tab-pane{
+    margin-bottom: 10px;
+}
 div.tab-content{
-    width: 850px;
+    width: 860px;
     margin: auto;
 }
 p.total{
-    width: 850px;
+    width: 860px;
     margin: 20px auto;
     text-align: right;
     color: #d0e9c6;
