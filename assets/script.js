@@ -80,7 +80,8 @@ $(document).ready(function(){
                                     $('select.material').on('changed.bs.select', function () {
                                         $(this).parent().parent().parent().find("input[name=materialPrice]").removeAttr('disabled');
                                         $(this).parent().parent().parent().find("input[name=materialCount]").val('1').removeAttr('disabled');
-                                        summa(table, ($(this).closest('tr')));
+                                        $(this).closest('tr').addClass('action');
+                                        summa(table, $('#tableMaterials'));
                                     });
 
 
@@ -108,10 +109,12 @@ $(document).ready(function(){
                                     });
 
                                     $("input[name=materialPrice]").on("blur", function(){
-                                        summa('material', ($(this).closest('tr')));
+                                        $(this).closest('tr').addClass('action');
+                                        summa(table, $('#tableMaterials'));
                                     });
                                     $("input[name=materialCount]").on("blur", function(){
-                                        summa(table, ($(this).closest('tr')));
+                                        $(this).closest('tr').addClass('action');
+                                        summa(table, $('#tableMaterials'));
                                     });
                                     break;
                     case 'work':
@@ -133,7 +136,8 @@ $(document).ready(function(){
                                         var id = $(this).val();
                                         $(this).parent().parent().parent().find("input[name=workPrice]").val(work_price[id]).removeAttr('disabled');
                                         $(this).parent().parent().parent().find("input[name=workCount]").val('1').removeAttr('disabled');
-                                        summa(table, ($(this).closest('tr')));
+                                        $(this).closest('tr').addClass('action');
+                                        summa(table, $('#tableWorks'));
                                     });
 
                                     $("input[name=workPrice]").on("keyup", function(){
@@ -144,10 +148,12 @@ $(document).ready(function(){
                                     });
 
                                     $("input[name=workPrice]").on("blur", function(){
-                                        summa(table, ($(this).closest('tr')));
+                                        $(this).closest('tr').addClass('action');
+                                        summa(table, $('#tableWorks'));
                                     });
                                     $("input[name=workCount]").on("blur", function(){
-                                        summa(table, ($(this).closest('tr')));
+                                        $(this).closest('tr').addClass('action');
+                                        summa(table, $('#tableWorks'));
                                     });
                                     break;
                 }
@@ -156,20 +162,21 @@ $(document).ready(function(){
     }
 
     //сумма материалов и работ
-    function summa(name, tr){
-        var price = tr.find('input[name=' + name + 'Price]').val();
-        var count = tr.find('input[name=' + name + 'Count]').val();
+    function summa(name, table){
+        var price = $('tr.action').find('input[name=' + name + 'Price]').val();
+        var count = $('tr.action').find('input[name=' + name + 'Count]').val();
         if(price && count){
             var summ = (price * count).toFixed(2);
         }else{
             summ = 0;
         }
-        tr.find('input[name=' + name + 'Summ]').val(summ);
+        $('tr.action').find('input[name=' + name + 'Summ]').val(summ);
         var total = 0;
-        $(tr.parent().find('input[name=' + name + 'Summ]')).each(function(){
+        $(table.find('input[name=' + name + 'Summ]')).each(function(){
             total += +$(this).val();
         });
         $('p.' + name).text('Итого: ' + total + 'руб.');
+        $('tr.action').removeClass('action');
     }
 
     //проверка ввода чисел
@@ -216,6 +223,7 @@ $(document).ready(function(){
     $("#btnAddMaterials").click(function(){
         $('<tr>').appendTo('#tableMaterials');
         $('<td>').appendTo('#tableMaterials tr:last');
+        $('<button>').attr({"data-name":"material", "class":"btn btn-default btnRemove"}).html('<span class="glyphicon glyphicon-remove"></span>').appendTo('#tableMaterials td:last');
         $('<select>').attr('class', 'material').attr('name', 'material').appendTo('#tableMaterials td:last');
         $('<button>').attr({"data-name":"material", "class":"btn btn-default btnPlus", "data-toggle":"modal", "data-target":"#modal"}).html('<span class="glyphicon glyphicon-plus"></span>').appendTo('#tableMaterials td:last');
         $('<td>').appendTo('#tableMaterials tr:last');
@@ -224,11 +232,17 @@ $(document).ready(function(){
         $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'materialCount').attr('disabled', 'disabled').appendTo('#tableMaterials td:last');
         $('<td>').appendTo('#tableMaterials tr:last');
         $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'materialSumm').attr('disabled', 'disabled').appendTo('#tableMaterials td:last');
-
+        //нажатие кнопки Плюс в документе
         $('.btnPlus').on('click', function(event){
             event.preventDefault();
             $(this).prev().find('select').addClass('action');
             plus($(this).attr('data-name'));
+        });
+        //нажатие кнопки Удалить строку в документе
+        $('.btnRemove').on('click', function(event){
+            event.preventDefault();
+            $(this).parent().parent().remove();
+            summa('material', $('#tableMaterials'));
         });
         loadData('all', 'material');
     });
@@ -237,6 +251,7 @@ $(document).ready(function(){
     $("#btnAddWorks").click(function(){
         $('<tr>').appendTo('#tableWorks');
         $('<td>').appendTo('#tableWorks tr:last');
+        $('<button>').attr({"data-name":"work", "class":"btn btn-default btnRemove"}).html('<span class="glyphicon glyphicon-remove"></span>').appendTo('#tableWorks td:last');
         $('<select>').attr('class', 'work').attr('name', 'work').appendTo('#tableWorks td:last');
         $('<button>').attr({"data-name":"work", "class":"btn btn-default btnPlus", "data-toggle":"modal", "data-target":"#modal"}).html('<span class="glyphicon glyphicon-plus"></span>').appendTo('#tableWorks td:last');
         $('<td>').appendTo('#tableWorks tr:last');
@@ -245,20 +260,19 @@ $(document).ready(function(){
         $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'workCount').attr('disabled', 'disabled').appendTo('#tableWorks td:last');
         $('<td>').appendTo('#tableWorks tr:last');
         $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'workSumm').attr('disabled', 'disabled').appendTo('#tableWorks td:last');
-
+        //нажатие кнопки Плюс в документе
         $('.btnPlus').on('click', function(event){
             event.preventDefault();
             $(this).prev().find('select').addClass('action');
             plus($(this).attr('data-name'));
         });
+        //нажатие кнопки Удалить строку в документе
+        $('.btnRemove').on('click', function(event){
+            event.preventDefault();
+            $(this).parent().parent().remove();
+            summa('work', $('#tableWorks'));
+        });
         loadData('all', 'work');
-    });
-
-    //нажатие кнопки Плюс в документе
-    $('.btnPlus').on('click', function(event){
-        event.preventDefault();
-        $(this).prev().find('select').addClass('action');
-        plus($(this).attr('data-name'));
     });
 
     //обработка нажатия кнопки Плюс в документе
