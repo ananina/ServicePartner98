@@ -217,7 +217,13 @@ $(document).ready(function(){
     });
 
     //выбор статуса по-умолчанию
-    $("select[name=id_status]").val('1');
+    $('select[name=id_status]').val('1');
+    $('select[name=id_status]').selectpicker('refresh');
+
+    //выбор подразделения по-умолчанию
+    $('select[name=id_location]').val('1');
+    $('select[name=id_location]').selectpicker('refresh');
+
 
     //добавление материалов в новый документ
     $("#btnAddMaterials").click(function(){
