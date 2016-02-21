@@ -1,5 +1,13 @@
 $(document).ready(function(){
 
+    //навигационная панель:
+    $('.navbar-nav li').mouseenter(function(){
+        $(this).addClass('active');
+    });
+    $('.navbar-nav li').mouseleave(function(){
+        $(this).removeClass('active');
+    });
+
     //обработка событий на странице repair
     $('#repair-tab a').click(function (e) {
         e.preventDefault();
