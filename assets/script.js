@@ -213,7 +213,7 @@ $(document).ready(function(){
         liveSearch: true,
         title: 'Выберите...',
         width: '250px',
-        size: 5
+        size: 6
     });
 
     //выбор статуса по-умолчанию
