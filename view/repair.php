@@ -1,12 +1,11 @@
-<form action="<?=FPATH?>page/new_remont/repair" method="post">
-    <div id="tab" class="form-group">
-        <ul id="repair-tab" class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#repair-data">Данные о ремонте</a></li>
-            <li role="presentation"><a href="#materials-data">Материалы</a></li>
-            <li role="presentation"><a href="#works-data">Работы</a></li>
-        </ul>
-    </div>
-
+<div id="tab" class="form-group">
+    <ul id="repair-tab" class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#repair-data">Данные о ремонте</a></li>
+        <li role="presentation"><a href="#materials-data">Материалы</a></li>
+        <li role="presentation"><a href="#works-data">Работы</a></li>
+    </ul>
+</div>
+<form action="" method="post">
     <div class="tab-content">
         <div role="tabpanel" class="tab-pane fade in active" id="repair-data">
             <div class="floatLeft width470">
@@ -19,12 +18,12 @@
                         </div>
                     </div>
                     </p>
-                    <p>Номер: <input id="number" class="form-control" type="text" name="number" value="<?=$number?>"></p>
+                    <p>Номер: <input id="number" class="form-control" type="text" name="number" value="<?=$number?>" required></p>
                 </fieldset>
 
                 <fieldset id="fieldsetClient">
                     <legend>Клиент</legend>
-                    <p>Ф.И.О.: <p><select class="form-control select client" name="id_client" size="1" required">
+                    <p>Ф.И.О.: <p><select class="form-control select client" name="id_client" size="1" required>
                         <?php foreach($clients as $key=>$value){?>
                             <option value="<?=$value['id_client']?>"><?=$value['client']?></option>
                         <?php } ?>
@@ -38,7 +37,7 @@
                 <fieldset id="fieldsetStatus">
                     <legend>Статус</legend>
                     <div class="input-group date date-end floatLeft" data-provide="datepicker">
-                        <input type="text" class="form-control dateBegin" name="date_end" value="<?=$date?>">
+                        <input type="text" class="form-control dateBegin" name="date_status" value="<?=$date?>">
                         <div class="input-group-addon">
                             <span class="glyphicon glyphicon-th"></span>
                         </div>
@@ -144,11 +143,10 @@
             </table>
             <p class="total work"></p>
         </div>
-        <button type="submit" class="btn btn-default btn-form" name="save">Сохранить</button>
-        <button type="submit" class="btn btn-default btn-form" name="cancel">Отмена</button>
+
+        <button id="saveNewDocument" type="submit" class="btn btn-default btn-form"">Сохранить</button>
+        <a class="btn btn-default btn-form" href="<?=FPATH?>page/index">Отмена</a>
+
     </div>
-
-
 </form>
-
 <?=$content?>

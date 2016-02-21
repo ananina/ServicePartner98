@@ -127,3 +127,7 @@ div.width310{
 div.width470{
     width: 470px;
 }
+.error{
+    border-color: #bc0000;
+    background-color: #b94a48;
+}

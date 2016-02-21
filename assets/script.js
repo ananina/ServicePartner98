@@ -38,6 +38,7 @@ $(document).ready(function(){
             format: 'dd.mm.yyyy',
             autoclose: true
         });
+
         $('.date-end').datepicker('setStartDate', date);
         var dateEnd = $(".dateEnd").val();
 
@@ -453,17 +454,117 @@ $(document).ready(function(){
             data: {table: table, params: params},
             success: function (id) {
                 //выбор в селект только что добавленной позиции
-                $('select.' + table).append(('<option value=' + id + '>' + params[table] + '</option>'));
-                $('select.' + table).selectpicker('refresh');
-                $('select.action').selectpicker('val', id);
-                $('select.action').parent().parent().parent().find('input[name=' + table + 'Price]').val(params['price']).removeAttr('disabled');
-                $('select.action').parent().parent().parent().find('input[name=' + table + 'Count]').val('1').removeAttr('disabled');
-                $('select.action').parent().parent().parent().find('#address_' + table).val(params['address']);
-                $('select.action').parent().parent().parent().find('#tel_' + table).val(params['tel']);
-                summa(table, ($('select.action').closest('tr')));
-                $('select.action').removeClass('action');
+                if(table == 'material' || table == 'work'){
+                    $('select.' + table).append(('<option value=' + id + '>' + params[table] + '</option>'));
+                    $('select.' + table).selectpicker('refresh');
+                    $('select.action').selectpicker('val', id);
+                    $('select.action').parent().parent().parent().find('input[name=' + table + 'Price]').val(params['price']).removeAttr('disabled');
+                    $('select.action').parent().parent().parent().find('input[name=' + table + 'Count]').val('1').removeAttr('disabled');
+                    $('select.action').parent().parent().parent().find('#address_' + table).val(params['address']);
+                    $('select.action').parent().parent().parent().find('#tel_' + table).val(params['tel']);
+                    summa(table, ($('select.action').closest('tr')));
+                    $('select.action').removeClass('action');
+                }
+
+                //сохранение данных о материалах и работах при сохранении нового документа
+                if(table == 'repair'){
+                    console.log(id);
+                    var inputs = $('#materials-data input[name]');
+                    var selected = $('#materials-data select[name]');
+                    var paramsMaterial = new Object();
+                    paramsMaterial['id'] = id;
+                    $(inputs).each(function() {
+                        var key = $(this).attr('name');
+                        var value = $(this).val();
+                        if (value) {
+                            paramsMaterial[key] = value;
+                        }
+                    });
+                    $(selected).each(function() {
+                        var key = $(this).attr('name');
+                        var value = $(this).val();
+                        if (value) {
+                            paramsMaterial[key] = value;
+                        }
+                    });
+                    console.log(paramsMaterial);
+                    //addData('number_materials', paramsMaterial);
+
+                    var inputs = $('#works-data input[name]');
+                    var selected = $('#works-data select[name]');
+                    var paramsWork = new Object();
+                    paramsWork['id'] = id;
+                    $(inputs).each(function() {
+                        var key = $(this).attr('name');
+                        var value = $(this).val();
+                        if (value) {
+                            paramsWork[key] = value;
+                        }
+                    });
+                    $(selected).each(function() {
+                        var key = $(this).attr('name');
+                        var value = $(this).val();
+                        if (value) {
+                            paramsWork[key] = value;
+                        }
+                    });
+                    console.log(paramsWork);
+                    //addData('number_works', paramsWork);
+                }
 
             }
         });
     }
+
+    //валидация формы при нажатии на кнопке Сохранить
+    $('#saveNewDocument').click(function(event){
+        event.preventDefault();
+        var valid = true;
+        if($('input[name=date_begin]').val() == ''){
+            valid = false;
+            $('input[name=number]').addClass('error');
+        }
+        if($('select[name=id_client]').val() == ''){
+            valid = false;
+            $('select[name=id_client]').prev().prev().addClass('error');
+        }
+        if($('select[name=id_type]').val() == ''){
+            valid = false;
+            $('select[name=id_type]').prev().prev().addClass('error');
+        }
+        if($('select[name=id_brend]').val() == ''){
+            valid = false;
+            $('select[name=id_brend]').prev().prev().addClass('error');
+        }
+
+        if(valid){
+            var inputs = $('#repair-data input[name]');
+            var textareas = $('#repair-data textarea[name]');
+            var selected = $('#repair-data select[name]');
+            var params = new Object();
+            $(inputs).each(function() {
+                var key = $(this).attr('name');
+                var value = $(this).val();
+                if (value) {
+                    params[key] = value;
+                }
+            });
+            $(textareas).each(function() {
+                var key = $(this).attr('name');
+                var value = $(this).val();
+                if (value) {
+                    params[key] = value;
+                }
+            });
+            $(selected).each(function() {
+                var key = $(this).attr('name');
+                var value = $(this).val();
+                if (value) {
+                    params[key] = value;
+                }
+            });
+            addData('repair', params);
+        }
+
+    });
 });
