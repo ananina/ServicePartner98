@@ -143,8 +143,8 @@
             </table>
             <p class="total work"></p>
         </div>
-
-        <button id="saveNewDocument" type="submit" class="btn btn-default btn-form"">Сохранить</button>
+        
+        <a id="saveNewDocument" class="btn btn-default btn-form" href="<?=FPATH?>page/index">Сохранить</a>
         <a class="btn btn-default btn-form" href="<?=FPATH?>page/index">Отмена</a>
 
     </div>

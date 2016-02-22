@@ -111,10 +111,10 @@ $(document).ready(function(){
                                     });
 
                                     $("input[name=price]").on("keyup", function(){
-                                        isNumericPrice($(this));
+                                        isNumeric($(this));
                                     });
                                     $("input[name=count]").on("keyup", function(){
-                                        isNumericCount($(this));
+                                        isInteger($(this));
                                     });
 
                                     $("input[name=price]").on("blur", function(){
@@ -150,10 +150,10 @@ $(document).ready(function(){
                                     });
 
                                     $("input[name=price]").on("keyup", function(){
-                                        isNumericPrice($(this));
+                                        isNumeric($(this));
                                     });
                                     $("input[name=count]").on("keyup", function(){
-                                        isNumericCount($(this));
+                                        isInteger($(this));
                                     });
 
                                     $("input[name=price]").on("blur", function(){
@@ -189,7 +189,7 @@ $(document).ready(function(){
     }
 
     //проверка ввода чисел
-    function isNumericPrice(elem){
+    function isNumeric(elem){
         var str = elem.val();
         if(isNaN(str)){
             str = str.substring(0,str.length-1);
@@ -202,7 +202,7 @@ $(document).ready(function(){
             }
         }
     }
-    function isNumericCount(elem){
+    function isInteger(elem){
         var str = elem.val();
         if(isNaN(str)){
             str = str.substring(0,str.length-1);
@@ -378,7 +378,7 @@ $(document).ready(function(){
     });
 
     $("input[name=price]").on("keyup", function(){
-        isNumericPrice($(this));
+        isNumeric($(this));
     });
 
     $("input[name=tel]").mask("8-999-999-9999");
@@ -504,6 +504,7 @@ $(document).ready(function(){
                             addData(saveTable, parametr);
                         });
                     }
+                    document.location.href=$('#saveNewDocument').attr('href');
                 }
 
             }
@@ -514,7 +515,7 @@ $(document).ready(function(){
     $('#saveNewDocument').click(function(event){
         event.preventDefault();
         var valid = true;
-        if($('input[name=date_begin]').val() == ''){
+        if($('input[name=number]').val() == ''){
             valid = false;
             $('input[name=number]').addClass('error');
         }
@@ -559,5 +560,20 @@ $(document).ready(function(){
             });
             addData('repair', params);
         }
+    });
+
+    //Удаление класса ошибки при вводе значений в поле
+    $('input[name=number]').keyup(function(){
+        $('input[name=number]').removeClass('error');
+        isInteger($(this));
+    });
+    $('select[name=id_client]').change(function(){
+        $('select[name=id_client]').prev().prev().removeClass('error');
+    });
+    $('select[name=id_type]').change(function(){
+        $('select[name=id_type]').prev().prev().removeClass('error');
+    });
+    $('select[name=id_brend]').change(function(){
+        $('select[name=id_brend]').prev().prev().removeClass('error');
     });
 });
