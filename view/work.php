@@ -4,11 +4,13 @@
     </div>
     <div class="panel-body">
         <table class="table table-hover table-condensed table-main">
-            <tr>
-                <td>Наименование работы</td>
-                <td>Цена, руб.</td>
-                <td></td>
-            </tr>
+            <thead>
+                <tr>
+                    <td>Наименование работы</td>
+                    <td>Цена, руб.</td>
+                    <td></td>
+                </tr>
+            </thead>
             <form action="<?=FPATH?>page/add/work" method="post">
                 <tr>
                     <td><div class="form-group">

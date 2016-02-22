@@ -1,18 +1,19 @@
 <table class="table table-hover table-condensed">
-    <tr>
-        <td>№</td>
-        <td>Дата</td>
-        <td>Тип</td>
-        <td>Статус</td>
-        <td>Ф.И.О.</td>
-        <td>Адрес</td>
-        <td>Телефон</td>
-        <td>Производитель</td>
-        <td>Модель</td>
-        <td>Подразделение</td>
-        <td>Мастер</td>
-    </tr>
-
+    <thead>
+        <tr>
+            <td>№</td>
+            <td>Дата</td>
+            <td>Тип</td>
+            <td>Статус</td>
+            <td>Ф.И.О.</td>
+            <td>Адрес</td>
+            <td>Телефон</td>
+            <td>Производитель</td>
+            <td>Модель</td>
+            <td>Подразделение</td>
+            <td>Мастер</td>
+        </tr>
+    </thead>
 
 <?php foreach($params as $value){?>
     <a href="<?=FPATH?>page/open_repair/repair/<?=$value['id']?>">

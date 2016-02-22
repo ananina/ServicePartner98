@@ -121,12 +121,14 @@
         <div role="tabpanel" class="tab-pane fade" id="materials-data">
             <button id="btnAddMaterials" type="button" class="btn btn-primary btn-lg">Добавить</button>
             <table id="tableMaterials" class="table table-hover" data-path="<?=FPATH?>page/add/material">
-                <tr>
-                    <td>Наименование</td>
-                    <td>Цена, руб.</td>
-                    <td>Количество, шт.</td>
-                    <td>Сумма, руб.</td>
-                </tr>
+                <thead>
+                    <tr>
+                        <td>Наименование</td>
+                        <td>Цена, руб.</td>
+                        <td>Количество, шт.</td>
+                        <td>Сумма, руб.</td>
+                    </tr>
+                </thead>
             </table>
             <p class="total material"></p>
         </div>
@@ -134,16 +136,18 @@
         <div role="tabpanel" class="tab-pane fade" id="works-data">
             <button id="btnAddWorks" type="button" class="btn btn-primary btn-lg">Добавить</button>
             <table id="tableWorks" class="table table-hover">
-                <tr>
-                    <td>Наименование</td>
-                    <td>Цена, руб.</td>
-                    <td>Количество, шт.</td>
-                    <td>Сумма, руб.</td>
-                </tr>
+                <thead>
+                    <tr>
+                        <td>Наименование</td>
+                        <td>Цена, руб.</td>
+                        <td>Количество, шт.</td>
+                        <td>Сумма, руб.</td>
+                    </tr>
+                </thead>
             </table>
             <p class="total work"></p>
         </div>
-        
+
         <a id="saveNewDocument" class="btn btn-default btn-form" href="<?=FPATH?>page/index">Сохранить</a>
         <a class="btn btn-default btn-form" href="<?=FPATH?>page/index">Отмена</a>
 
