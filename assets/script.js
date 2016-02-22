@@ -247,12 +247,7 @@ $(document).ready(function(){
         $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'count').attr('disabled', 'disabled').appendTo('#tableMaterials td:last');
         $('<td>').appendTo('#tableMaterials tr:last');
         $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'summ').attr('disabled', 'disabled').appendTo('#tableMaterials td:last');
-        //нажатие кнопки Плюс в документе
-        $('.btnPlus').on('click', function(event){
-            event.preventDefault();
-            $(this).prev().find('select').addClass('action');
-            plus($(this).attr('data-name'));
-        });
+        
         //нажатие кнопки Удалить строку в документе
         $('.btnRemove').on('click', function(event){
             event.preventDefault();
@@ -275,12 +270,7 @@ $(document).ready(function(){
         $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'count').attr('disabled', 'disabled').appendTo('#tableWorks td:last');
         $('<td>').appendTo('#tableWorks tr:last');
         $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'summ').attr('disabled', 'disabled').appendTo('#tableWorks td:last');
-        //нажатие кнопки Плюс в документе
-        $('.btnPlus').on('click', function(event){
-            event.preventDefault();
-            $(this).prev().find('select').addClass('action');
-            plus($(this).attr('data-name'));
-        });
+
         //нажатие кнопки Удалить строку в документе
         $('.btnRemove').on('click', function(event){
             event.preventDefault();
@@ -291,7 +281,7 @@ $(document).ready(function(){
     });
 
     //нажатие кнопки Плюс в документе
-    $('.btnPlus').on('click', function(event){
+    $('.tab-content').on('click','.btnPlus', function(event){
         event.preventDefault();
         $(this).prev().find('select').addClass('action');
         plus($(this).attr('data-name'));
@@ -576,4 +566,11 @@ $(document).ready(function(){
     $('select[name=id_brend]').change(function(){
         $('select[name=id_brend]').prev().prev().removeClass('error');
     });
+
+    //Обработка событий выбора документа из таблицы на главной странице
+    $('#tableDocuments tr').mousedown(function(){
+        console.log($(this).data('id'));
+    });
+
+
 });
