@@ -22,7 +22,7 @@
         <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" href="http://www.partner98.ru/">
-                    <img alt="Brand" src="...">
+                    <img alt="Brand" src="<?=FPATH?>img/Logotip.jpg" height="35" width="56">
                 </a>
             </div>
         </div>
