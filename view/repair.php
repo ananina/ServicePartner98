@@ -154,3 +154,4 @@
     </div>
 </form>
 <?=$content?>
+<input id="typeOfForm" type="text" value="<?=$form?>" disabled>
