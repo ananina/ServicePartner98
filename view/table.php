@@ -1,4 +1,4 @@
-<table class="table table-hover table-condensed">
+<table id="tableDocuments" class="table table-hover table-condensed">
     <thead>
         <tr>
             <td>№</td>
@@ -16,8 +16,7 @@
     </thead>
 
 <?php foreach($params as $value){?>
-    <a href="<?=FPATH?>page/open_repair/repair/<?=$value['id']?>">
-        <tr>
+        <tr data-id="<?=$value['id']?>">
             <td><?=$value['number']?></td>
             <td><?=$value['date_begin']?></td>
             <?php $id_type = $value['id_type'];
@@ -59,6 +58,6 @@
                     <td><?=$user['user']?></td>
                 <?php }
             }?>
-        </tr></a>
+        </tr>
 <?php } ?>
 </table>
