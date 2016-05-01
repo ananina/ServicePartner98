@@ -131,3 +131,6 @@ div.width470{
     border-color: #bc0000;
     background-color: #b94a48;
 }
+#typeOfForm{
+    visibility: hidden;
+}
