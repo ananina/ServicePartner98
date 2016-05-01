@@ -165,6 +165,37 @@ $(document).ready(function(){
                                         summa(table, $('#tableWorks'));
                                     });
                                     break;
+                    case 'repair':
+                                    console.log(data);
+                                    $('input[name=date_begin]').val(data['date_begin']);
+                                    $('input[name=number]').val(data['number']);
+                                    $('select[name=id_client]').val(data['id_client']);
+                                    $('select[name=id_client]').selectpicker('refresh');
+                                    loadData('one', 'client', 'id_client', data['id_client']);
+                                    $('input[name=date_status]').val(data['date_status']);
+                                    $('select[name=id_status]').val(data['id_status']);
+                                    $('select[name=id_status]').selectpicker('refresh');
+                                    $('textarea[name=problem]').val(data['problem']);
+                                    $('textarea[name=comment]').val(data['comment']);
+                                    $("select[name=id_type]").val(data['id_type']);
+                                    $('select[name=id_type]').selectpicker('refresh');
+                                    $("select[name=id_brend]").val(data['id_brend']);
+                                    $('select[name=id_brend]').selectpicker('refresh');
+                                    $('input[name=model]').val(data['model']);
+                                    $('input[name=serial_number]').val(data['serial_number']);
+                                    $('input[name=lot_number]').val(data['lot_number']);
+                                    $('input[name=motor]').val(data['motor']);
+                                    $('input[name=U]').val(data['U']);
+                                    $('input[name=I]').val(data['I']);
+                                    $('input[name=W]').val(data['W']);
+                                    $('input[name=garant]').val(data['garant']);
+                                    $("select[name=id_user]").val(data['id_user']);
+                                    $('select[name=id_user]').selectpicker('refresh');
+                                    $("select[name=id_location]").val(data['id_location']);
+                                    $('select[name=id_location]').selectpicker('refresh');
+                                    $('input[name=date_end]').val(data['date_end']);
+
+                                    break;
                 }
             }
         });
@@ -569,8 +600,13 @@ $(document).ready(function(){
 
     //Обработка событий выбора документа из таблицы на главной странице
     $('#tableDocuments tr').mousedown(function(){
-        console.log($(this).data('id'));
+        var id = $(this).data('id');
+        var url = "/ServicePartner98/page/form_repair/repair/" + id;
+        $(location).attr('href',url);
     });
-
+    if($('#typeOfForm').val() > 0){
+        var id = $('#typeOfForm').val();
+        loadData('one', 'repair', 'id', id);
+    }
 
 });
