@@ -66,140 +66,173 @@ $(document).ready(function(){
         $.ajax({
             type: "POST",
             url: "/ServicePartner98/model/ajax.php",
+            async: false,
             dataType: 'json',
             data: {count : count, table : table, id_name : id_name, id: id},
             success: function (data) {
-                switch (table){
-                    case 'client': $('#address_client').val(data['address']);
-                                    $('#tel_client').val(data['tel']);
-                                    break;
+                switch (table) {
+                    case 'client':
+                        $('#address_client').val(data['address']);
+                        $('#tel_client').val(data['tel']);
+                        break;
                     case 'material':
-                                    for(item in data){
-                                        //console.log(data[item]);
-                                        var idMaterial = data[item]['id_material'];
-                                        var material = data[item]['material'];
-                                        $('<option>').attr('value', idMaterial).html(material).appendTo('select.material:last');
-                                    }
-                                    $('select.material').selectpicker({
-                                        liveSearch: true,
-                                        title: 'Выберите материал...',
-                                        size: 5
-                                    });
+                        for (item in data) {
+                            //console.log(data[item]);
+                            var idMaterial = data[item]['id_material'];
+                            var material = data[item]['material'];
+                            $('<option>').attr('value', idMaterial).html(material).appendTo('select.material:last');
+                        }
+                        $('select.material').selectpicker({
+                            liveSearch: true,
+                            title: 'Выберите материал...',
+                            size: 5
+                        });
 
-                                    $('select.material').on('changed.bs.select', function () {
-                                        $(this).parent().parent().parent().find("input[name=price]").removeAttr('disabled');
-                                        $(this).parent().parent().parent().find("input[name=count]").val('1').removeAttr('disabled');
-                                        $(this).closest('tr').addClass('action');
-                                        summa(table, $('#tableMaterials'));
-                                    });
+                        $('select.material').on('changed.bs.select', function () {
+                            $(this).parent().parent().parent().find("input[name=price]").removeAttr('disabled');
+                            $(this).parent().parent().parent().find("input[name=count]").val('1').removeAttr('disabled');
+                            $(this).closest('tr').addClass('action');
+                            summa(table, $('#tableMaterials'));
+                        });
 
 
-                                    /* проверка значения
-                                    $('select.material').on('changed.bs.select', function (e) {
-                                    console.log($(this).val());
-                                    });*/
-                                    $('.btnAdd').on('click', function(event) {
-                                        event.preventDefault();
-                                        $('#modalLabel').html('Добавление материала');
-                                        $('#modal input[type=submit]').val('Добавить');
-                                        $('#modal .table-modal tr').empty();
-                                        $('#modal tr').append('<td>Наименование</td>');
-                                        $('#modal table').append('<tr><td><div class="form-group"><input type="text" class="form-control" name="material" data-name="add" placeholder="Введите название материала..."></div></td></tr>');
-                                        var path = $('#tableMaterials').attr('data-path');
-                                        $('#modal').parent().attr('action', path);
+                        /* проверка значения
+                         $('select.material').on('changed.bs.select', function (e) {
+                         console.log($(this).val());
+                         });*/
+                        $('.btnAdd').on('click', function (event) {
+                            event.preventDefault();
+                            $('#modalLabel').html('Добавление материала');
+                            $('#modal input[type=submit]').val('Добавить');
+                            $('#modal .table-modal tr').empty();
+                            $('#modal tr').append('<td>Наименование</td>');
+                            $('#modal table').append('<tr><td><div class="form-group"><input type="text" class="form-control" name="material" data-name="add" placeholder="Введите название материала..."></div></td></tr>');
+                            var path = $('#tableMaterials').attr('data-path');
+                            $('#modal').parent().attr('action', path);
 
-                                    });
+                        });
 
-                                    $("input[name=price]").on("keyup", function(){
-                                        isNumeric($(this));
-                                    });
-                                    $("input[name=count]").on("keyup", function(){
-                                        isInteger($(this));
-                                    });
+                        $("input[name=price]").on("keyup", function () {
+                            isNumeric($(this));
+                        });
+                        $("input[name=count]").on("keyup", function () {
+                            isInteger($(this));
+                        });
 
-                                    $("input[name=price]").on("blur", function(){
-                                        $(this).closest('tr').addClass('action');
-                                        summa(table, $('#tableMaterials'));
-                                    });
-                                    $("input[name=count]").on("blur", function(){
-                                        $(this).closest('tr').addClass('action');
-                                        summa(table, $('#tableMaterials'));
-                                    });
-                                    break;
+                        $("input[name=price]").on("blur", function () {
+                            $(this).closest('tr').addClass('action');
+                            summa(table, $('#tableMaterials'));
+                        });
+                        $("input[name=count]").on("blur", function () {
+                            $(this).closest('tr').addClass('action');
+                            summa(table, $('#tableMaterials'));
+                        });
+                        break;
                     case 'work':
-                                    var work_price = [];
-                                    for(item in data){
-                                        var idWork = data[item]['id_work'];
-                                        var work = data[item]['work'];
-                                        var price = data[item]['price'];
-                                        work_price[idWork] = price;
-                                        $('<option>').attr('value', idWork).html(work).appendTo('select.work:last');
-                                    }
-                                    $('select.work').selectpicker({
-                                        liveSearch: true,
-                                        title: 'Выберите работу...',
-                                        size: 5
-                                    });
+                        var work_price = [];
+                        for (item in data) {
+                            var idWork = data[item]['id_work'];
+                            var work = data[item]['work'];
+                            var price = data[item]['price'];
+                            work_price[idWork] = price;
+                            $('<option>').attr('value', idWork).html(work).appendTo('select.work:last');
+                        }
+                        $('select.work').selectpicker({
+                            liveSearch: true,
+                            title: 'Выберите работу...',
+                            size: 5
+                        });
 
-                                    $('select.work').on('changed.bs.select', function () {
-                                        var id = $(this).val();
-                                        $(this).parent().parent().parent().find("input[name=price]").val(work_price[id]).removeAttr('disabled');
-                                        $(this).parent().parent().parent().find("input[name=count]").val('1').removeAttr('disabled');
-                                        $(this).closest('tr').addClass('action');
-                                        summa(table, $('#tableWorks'));
-                                    });
+                        $('select.work').on('changed.bs.select', function () {
+                            var id = $(this).val();
+                            $(this).parent().parent().parent().find("input[name=price]").val(work_price[id]).removeAttr('disabled');
+                            $(this).parent().parent().parent().find("input[name=count]").val('1').removeAttr('disabled');
+                            $(this).closest('tr').addClass('action');
+                            summa(table, $('#tableWorks'));
+                        });
 
-                                    $("input[name=price]").on("keyup", function(){
-                                        isNumeric($(this));
-                                    });
-                                    $("input[name=count]").on("keyup", function(){
-                                        isInteger($(this));
-                                    });
+                        $("input[name=price]").on("keyup", function () {
+                            isNumeric($(this));
+                        });
+                        $("input[name=count]").on("keyup", function () {
+                            isInteger($(this));
+                        });
 
-                                    $("input[name=price]").on("blur", function(){
-                                        $(this).closest('tr').addClass('action');
-                                        summa(table, $('#tableWorks'));
-                                    });
-                                    $("input[name=count]").on("blur", function(){
-                                        $(this).closest('tr').addClass('action');
-                                        summa(table, $('#tableWorks'));
-                                    });
-                                    break;
+                        $("input[name=price]").on("blur", function () {
+                            $(this).closest('tr').addClass('action');
+                            summa(table, $('#tableWorks'));
+                        });
+                        $("input[name=count]").on("blur", function () {
+                            $(this).closest('tr').addClass('action');
+                            summa(table, $('#tableWorks'));
+                        });
+                        break;
                     case 'repair':
-                                    console.log(data);
-                                    $('input[name=date_begin]').val(data['date_begin']);
-                                    $('input[name=number]').val(data['number']);
-                                    $('select[name=id_client]').val(data['id_client']);
-                                    $('select[name=id_client]').selectpicker('refresh');
-                                    loadData('one', 'client', 'id_client', data['id_client']);
-                                    $('input[name=date_status]').val(data['date_status']);
-                                    $('select[name=id_status]').val(data['id_status']);
-                                    $('select[name=id_status]').selectpicker('refresh');
-                                    $('textarea[name=problem]').val(data['problem']);
-                                    $('textarea[name=comment]').val(data['comment']);
-                                    $("select[name=id_type]").val(data['id_type']);
-                                    $('select[name=id_type]').selectpicker('refresh');
-                                    $("select[name=id_brend]").val(data['id_brend']);
-                                    $('select[name=id_brend]').selectpicker('refresh');
-                                    $('input[name=model]').val(data['model']);
-                                    $('input[name=serial_number]').val(data['serial_number']);
-                                    $('input[name=lot_number]').val(data['lot_number']);
-                                    $('input[name=motor]').val(data['motor']);
-                                    $('input[name=U]').val(data['U']);
-                                    $('input[name=I]').val(data['I']);
-                                    $('input[name=W]').val(data['W']);
-                                    $('input[name=garant]').val(data['garant']);
-                                    $("select[name=id_user]").val(data['id_user']);
-                                    $('select[name=id_user]').selectpicker('refresh');
-                                    $("select[name=id_location]").val(data['id_location']);
-                                    $('select[name=id_location]').selectpicker('refresh');
-                                    $('input[name=date_end]').val(data['date_end']);
-
-                                    break;
+                        $('input[name=date_begin]').val(data['date_begin']);
+                        $('input[name=number]').val(data['number']);
+                        $('select[name=id_client]').val(data['id_client']);
+                        $('select[name=id_client]').selectpicker('refresh');
+                        loadData('one', 'client', 'id_client', data['id_client']);
+                        $('input[name=date_status]').val(data['date_status']);
+                        $('select[name=id_status]').val(data['id_status']);
+                        $('select[name=id_status]').selectpicker('refresh');
+                        $('textarea[name=problem]').val(data['problem']);
+                        $('textarea[name=comment]').val(data['comment']);
+                        $("select[name=id_type]").val(data['id_type']);
+                        $('select[name=id_type]').selectpicker('refresh');
+                        $("select[name=id_brend]").val(data['id_brend']);
+                        $('select[name=id_brend]').selectpicker('refresh');
+                        $('input[name=model]').val(data['model']);
+                        $('input[name=serial_number]').val(data['serial_number']);
+                        $('input[name=lot_number]').val(data['lot_number']);
+                        $('input[name=motor]').val(data['motor']);
+                        $('input[name=U]').val(data['U']);
+                        $('input[name=I]').val(data['I']);
+                        $('input[name=W]').val(data['W']);
+                        $('input[name=garant]').val(data['garant']);
+                        $("select[name=id_user]").val(data['id_user']);
+                        $('select[name=id_user]').selectpicker('refresh');
+                        $("select[name=id_location]").val(data['id_location']);
+                        $('select[name=id_location]').selectpicker('refresh');
+                        $('input[name=date_end]').val(data['date_end']);
+                        loadData('many', 'number_materials', 'id', data['id']);
+                        loadData('many', 'number_works', 'id', data['id']);
+                        break;
+                    case 'number_materials':
+                        for (item in data) {
+                            loadMaterials();
+                        }
+                        var i = 0;
+                        $('#tableMaterials tbody tr').each(function(){
+                            $(this).find('select[name=id_material]').val(data[i]['id_material']);
+                            $(this).find('select[name=id_material]').selectpicker('refresh');
+                            $(this).find('input[name=count]').val(data[i]['count']).removeAttr('disabled');
+                            $(this).find('input[name=price]').val(data[i]['price']).removeAttr('disabled');
+                            $(this).find('input[name=summ]').val(data[i]['summ']).addClass('action');
+                            i++;
+                        });
+                        summa('material', $('#tableMaterials'));
+                        break;
+                    case 'number_works':
+                        for (item in data) {
+                            loadWorks();
+                        }
+                        var i = 0;
+                        $('#tableWorks tbody tr').each(function(){
+                            $(this).find('select[name=id_work]').val(data[i]['id_work']);
+                            $(this).find('select[name=id_work]').selectpicker('refresh');
+                            $(this).find('input[name=count]').val(data[i]['count']).removeAttr('disabled');
+                            $(this).find('input[name=price]').val(data[i]['price']).removeAttr('disabled');
+                            $(this).find('input[name=summ]').val(data[i]['summ']).addClass('action');
+                            i++;
+                        });
+                        summa('work', $('#tableWorks'));
+                        break;
                 }
             }
         });
     }
+
 
     //сумма материалов и работ
     function summa(name, table){
@@ -264,9 +297,8 @@ $(document).ready(function(){
     $('select[name=id_location]').val('1');
     $('select[name=id_location]').selectpicker('refresh');
 
-
-    //добавление материалов в новый документ
-    $("#btnAddMaterials").click(function(){
+    //Функция загрузки материалов в документ
+    function loadMaterials(){
         $('<tr>').appendTo('#tableMaterials');
         $('<td>').appendTo('#tableMaterials tr:last');
         $('<button>').attr({"data-name":"material", "class":"btn btn-default btnRemove"}).html('<span class="glyphicon glyphicon-remove"></span>').appendTo('#tableMaterials td:last');
@@ -278,7 +310,7 @@ $(document).ready(function(){
         $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'count').attr('disabled', 'disabled').appendTo('#tableMaterials td:last');
         $('<td>').appendTo('#tableMaterials tr:last');
         $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'summ').attr('disabled', 'disabled').appendTo('#tableMaterials td:last');
-        
+
         //нажатие кнопки Удалить строку в документе
         $('.btnRemove').on('click', function(event){
             event.preventDefault();
@@ -286,10 +318,10 @@ $(document).ready(function(){
             summa('material', $('#tableMaterials'));
         });
         loadData('all', 'material');
-    });
+    }
 
-    //добавление работ в новый документ
-    $("#btnAddWorks").click(function(){
+    //Функция загрузки работ в документ
+    function loadWorks(){
         $('<tr>').appendTo('#tableWorks');
         $('<td>').appendTo('#tableWorks tr:last');
         $('<button>').attr({"data-name":"work", "class":"btn btn-default btnRemove"}).html('<span class="glyphicon glyphicon-remove"></span>').appendTo('#tableWorks td:last');
@@ -309,6 +341,16 @@ $(document).ready(function(){
             summa('work', $('#tableWorks'));
         });
         loadData('all', 'work');
+    }
+
+    //добавление материалов в новый документ
+    $("#btnAddMaterials").click(function(){
+        loadMaterials();
+    });
+
+    //добавление работ в новый документ
+    $("#btnAddWorks").click(function(){
+        loadWorks();
     });
 
     //нажатие кнопки Плюс в документе
