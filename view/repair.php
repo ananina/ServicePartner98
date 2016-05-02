@@ -1,4 +1,5 @@
 <div id="tab" class="form-group">
+    <h3 class="bg-info text-info"><?=$head?></h3>
     <ul id="repair-tab" class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#repair-data">Данные о ремонте</a></li>
         <li role="presentation"><a href="#materials-data">Материалы</a></li>

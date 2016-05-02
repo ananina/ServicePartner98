@@ -33,6 +33,11 @@ class C_Page extends C_Base
     public function action_form_repair (){
         $pageName = $this->params[2];
         $form = $this->params[3];
+        if($form == 0){
+            $head = 'Новый документ';
+        }else{
+            $head = 'Редактирование документа';
+        }
         $model = model::GetInstance();
         $clients = $model->get_all('client');
         $type = $model->get_all('type');
@@ -48,7 +53,7 @@ class C_Page extends C_Base
         $number = max($lastNumber) + 1;
         $today = date("d.m.Y");
         $content = $this->template("view/modal.php");
-        $this->content = $this->template("view/$pageName.php", ["clients" => $clients, "type" => $type, "brend" => $brend, "status" => $status, "location" => $location, "users" => $users, "number" => $number, "date" => $today, "content"=>$content, "form"=>$form]);
+        $this->content = $this->template("view/$pageName.php", ["clients" => $clients, "type" => $type, "brend" => $brend, "status" => $status, "location" => $location, "users" => $users, "number" => $number, "date" => $today, "content"=>$content, "form"=>$form, "head" => $head]);
     }
 
     public function action_add(){
