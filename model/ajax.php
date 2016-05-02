@@ -34,6 +34,14 @@ if(isset($count)){
             exit;
         }
     }
+    if($count == 'many'){
+        if(isset($table) && isset($id_name) && isset($id)) {
+            $model = model_some::GetInstance();
+            $data = $model->select_some($table, $id_name, $id);
+            print_r(json_encode($data));
+            exit;
+        }
+    }
 }
 
 if(isset($table) && isset($params)){
