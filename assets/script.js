@@ -516,12 +516,12 @@ $(document).ready(function(){
     }
 
     //Ajax-запрос на добавление в базу данных
-    function addData(table, params) {
+    function addData(table, id, params) {
         $.ajax({
             type: "POST",
             url: "/ServicePartner98/model/ajax.php",
             dataType: 'json',
-            data: {table: table, params: params},
+            data: {table: table, id: id, params: params},
             success: function (id) {
                 //выбор в селект только что добавленной позиции
                 if(table == 'material' || table == 'work' || table == 'client'){
@@ -569,7 +569,22 @@ $(document).ready(function(){
                     }
                     document.location.href=$('#saveNewDocument').attr('href');
                 }
+            }
+        });
+    }
 
+    //Ajax-запрос на редактирование данных в документе
+    function editData(table, id, params) {
+        $.ajax({
+            type: "POST",
+            url: "/ServicePartner98/model/ajax.php",
+            dataType: 'json',
+            data: {table: table, id: id, params: params},
+            success: function (rows) {
+                if(table == 'repair') {
+                    console.log(id);
+                    document.location.href = $('#saveNewDocument').attr('href');
+                }
             }
         });
     }
@@ -621,7 +636,13 @@ $(document).ready(function(){
                     params[key] = value;
                 }
             });
-            addData('repair', params);
+            if($('#repairHead').text() == 'Новый документ'){
+                addData('repair', params);
+            }
+            if($('#repairHead').text() == 'Редактирование документа'){
+                var id = $('#typeOfForm').val();
+                editData('repair', id, params);
+            }
         }
     });
 
