@@ -44,16 +44,15 @@ if(isset($count)){
     }
 }
 
-if(isset($table) && isset($id) && isset($params)){
+if(isset($table) && isset($id_name) && isset($id) && isset($params)){
     if($id == 0){
         $model = model::GetInstance();
         $idNew = $model->add($table, $params);
         print_r($idNew);
     }else{
         $model = model::GetInstance();
-        $rows = $model->edit($table, 'id', $id, $params);
+        $rows = $model->edit($table, $id_name, $id, $params);
         print_r($rows);
     }
-
 }
 
