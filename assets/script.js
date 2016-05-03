@@ -204,7 +204,7 @@ $(document).ready(function(){
                         }
                         var i = 0;
                         $('#tableMaterials tbody tr').each(function(){
-                            $(this).find('select[name=id_material]').val(data[i]['id_material']);
+                            $(this).find('select[name=id_material]').attr('data-id', data[i]['idIndex']).val(data[i]['id_material']);
                             $(this).find('select[name=id_material]').selectpicker('refresh');
                             $(this).find('input[name=count]').val(data[i]['count']).removeAttr('disabled');
                             $(this).find('input[name=price]').val(data[i]['price']).removeAttr('disabled');
@@ -219,7 +219,7 @@ $(document).ready(function(){
                         }
                         var i = 0;
                         $('#tableWorks tbody tr').each(function(){
-                            $(this).find('select[name=id_work]').val(data[i]['id_work']);
+                            $(this).find('select[name=id_work]').attr('data-id', data[i]['idIndex']).val(data[i]['id_work']);
                             $(this).find('select[name=id_work]').selectpicker('refresh');
                             $(this).find('input[name=count]').val(data[i]['count']).removeAttr('disabled');
                             $(this).find('input[name=price]').val(data[i]['price']).removeAttr('disabled');
@@ -574,16 +574,78 @@ $(document).ready(function(){
     }
 
     //Ajax-запрос на редактирование данных в документе
-    function editData(table, id, params) {
+    function editData(table, id_name, id, params) {
         $.ajax({
             type: "POST",
             url: "/ServicePartner98/model/ajax.php",
             dataType: 'json',
-            data: {table: table, id: id, params: params},
+            data: {table: table, id_name: id_name, id: id, params: params},
             success: function (rows) {
                 if(table == 'repair') {
-                    console.log(id);
-                    document.location.href = $('#saveNewDocument').attr('href');
+                    console.log(params);
+                    getMaterialsWorks('many','number_materials', 'id', id);
+                    getMaterialsWorks('many','number_works', 'id', id);
+                }
+                
+                document.location.href = $('#saveNewDocument').attr('href');
+            }
+        });
+    }
+
+    function getMaterialsWorks(count, table, id_name, id){
+        $.ajax({
+            type: "POST",
+            url: "/ServicePartner98/model/ajax.php",
+            dataType: 'json',
+            data: {count : count, table : table, id_name : id_name, id: id},
+            success: function (data) {
+                console.log(data);
+                if(table == 'number_materials'){
+                    var tableName = 'Materials';
+                    var name = 'id_material';
+                }
+                if(table == 'number_works'){
+                    var tableName = 'Works';
+                    var name = 'id_work';
+                }
+                var DataId = new Array();
+                $('#table' + tableName +' select[name=' + name + ']').each(function(){
+                    if($(this).val() != ''){
+                        DataId[$(this).attr('data-id')] = $(this).val();
+                    }
+                });
+
+                console.log(DataId);
+
+                for(item in data){
+                    var index = data[item]['idIndex'];
+                    if(index in DataId){
+                        console.log(index);
+                        var params = new Object();
+                        var elem = $('#table' + tableName +' tr:has(select[data-id=' + index +'])');
+
+                        var inputs = elem.find('input[name]');
+                        var selected = elem.find('select[name]');
+                        params['id'] = data[item]['id'];
+                        inputs.each(function() {
+                            var key = $(this).attr('name');
+                            var value = $(this).val();
+                            if (value) {
+                                params[key] = value;
+                            }
+                        });
+                        selected.each(function() {
+                            var key = $(this).attr('name');
+                            var value = $(this).val();
+                            if (value) {
+                                params[key] = value;
+                            }
+                        });
+                        console.log(params);
+
+                        editData(table, 'idIndex', index, params);
+                    }
+
                 }
             }
         });
@@ -641,7 +703,7 @@ $(document).ready(function(){
             }
             if($('#repairHead').text() == 'Редактирование документа'){
                 var id = $('#typeOfForm').val();
-                editData('repair', id, params);
+                editData('repair', 'id', id, params);
             }
         }
     });
