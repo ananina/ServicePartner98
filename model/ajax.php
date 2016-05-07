@@ -16,6 +16,9 @@ if(!empty($_POST['id'])){
 if(!empty($_POST['params'])){
     $params = ($_POST['params']);
 }
+if(!empty($_POST['action'])){
+    $action = ($_POST['action']);
+}
 
 if(isset($count)){
     if($count == 'one'){
@@ -43,16 +46,25 @@ if(isset($count)){
         }
     }
 }
-
-if(isset($table) && isset($id_name) && isset($id) && isset($params)){
-    if($id == 0){
+if(isset($action) && $action == 'add') {
+    if (isset($table) && isset($params)) {
         $model = model::GetInstance();
         $idNew = $model->add($table, $params);
         print_r($idNew);
-    }else{
+    }
+}
+if(isset($action) && $action == 'edit'){
+    if(isset($table) && isset($id_name) && isset($id) && isset($params)){
         $model = model::GetInstance();
         $rows = $model->edit($table, $id_name, $id, $params);
         print_r($rows);
     }
 }
 
+if(isset($action) && $action == 'delete'){
+    if(isset($table) && isset($id_name) && isset($id)){
+        $model = model::GetInstance();
+        $rows = $model->delete($table, $id_name, $id);
+        print_r($rows);
+    }
+}
