@@ -507,7 +507,7 @@ $(document).ready(function(){
 
                     });
                     if(validate){
-                        addData(table, params);
+                        addData(table, params, 'add');
                         $('#modal').modal('hide');
                     }
                 });
@@ -516,12 +516,12 @@ $(document).ready(function(){
     }
 
     //Ajax-запрос на добавление в базу данных
-    function addData(table, id, params) {
+    function addData(table, params, action) {
         $.ajax({
             type: "POST",
             url: "/ServicePartner98/model/ajax.php",
             dataType: 'json',
-            data: {table: table, id: id, params: params},
+            data: {table: table, params: params, action: action},
             success: function (id) {
                 //выбор в селект только что добавленной позиции
                 if(table == 'material' || table == 'work' || table == 'client'){
@@ -538,7 +538,6 @@ $(document).ready(function(){
 
                 //сохранение данных о материалах и работах при сохранении нового документа
                 if(table == 'repair'){
-                    console.log(id);
                     var inputs;
                     var selected;
                     var tableName = ['Materials', 'Works'];
@@ -563,8 +562,8 @@ $(document).ready(function(){
                                 }
                             });
                             var saveTable = 'number_' + tableName[item].toLowerCase();
-                            console.log(saveTable);
-                            addData(saveTable, parametr);
+
+                            addData(saveTable, parametr, 'add');
                         });
                     }
                     document.location.href=$('#saveNewDocument').attr('href');
@@ -574,24 +573,25 @@ $(document).ready(function(){
     }
 
     //Ajax-запрос на редактирование данных в документе
-    function editData(table, id_name, id, params) {
+    function editData(table, id_name, id, params, action) {
         $.ajax({
             type: "POST",
             url: "/ServicePartner98/model/ajax.php",
             dataType: 'json',
-            data: {table: table, id_name: id_name, id: id, params: params},
+            data: {table: table, id_name: id_name, id: id, params: params, action: action},
             success: function (rows) {
                 if(table == 'repair') {
-                    console.log(params);
                     getMaterialsWorks('many','number_materials', 'id', id);
                     getMaterialsWorks('many','number_works', 'id', id);
+                    //завершение всех ajax-запросов
+                    $(document).ajaxStop(function() {
+                        document.location.href = $('#saveNewDocument').attr('href');
+                    });
                 }
-                
-                document.location.href = $('#saveNewDocument').attr('href');
             }
         });
     }
-
+    //проверка на наличие материалов и работ в базе данных и их изменение, добавление или удаление
     function getMaterialsWorks(count, table, id_name, id){
         $.ajax({
             type: "POST",
@@ -599,7 +599,6 @@ $(document).ready(function(){
             dataType: 'json',
             data: {count : count, table : table, id_name : id_name, id: id},
             success: function (data) {
-                console.log(data);
                 if(table == 'number_materials'){
                     var tableName = 'Materials';
                     var name = 'id_material';
@@ -608,25 +607,57 @@ $(document).ready(function(){
                     var tableName = 'Works';
                     var name = 'id_work';
                 }
-                var DataId = new Array();
+                var DataId = new Object();
+                var noDataId = new Array();
+                var n = 0;
                 $('#table' + tableName +' select[name=' + name + ']').each(function(){
-                    if($(this).val() != ''){
+                    if($(this).attr('data-id') && $(this).val() != ''){
                         DataId[$(this).attr('data-id')] = $(this).val();
+                    }else if($(this).val() != ''){
+                        noDataId[n] = $(this).val();
+                        n++;
                     }
                 });
-
-                console.log(DataId);
-
-                for(item in data){
-                    var index = data[item]['idIndex'];
-                    if(index in DataId){
-                        console.log(index);
+                //если в базе данных имеются записи
+                if(data){
+                    for(item in data){
+                        var index = data[item]['idIndex'];
+                        if(index in DataId){
+                            var params = new Object();
+                            var elem = $('#table' + tableName +' tr:has(select[data-id=' + index +'])');
+                            var inputs = elem.find('input[name]');
+                            var selected = elem.find('select[name]');
+                            params['id'] = id;
+                            inputs.each(function() {
+                                var key = $(this).attr('name');
+                                var value = $(this).val();
+                                if (value) {
+                                    params[key] = value;
+                                }
+                            });
+                            selected.each(function() {
+                                var key = $(this).attr('name');
+                                var value = $(this).val();
+                                if (value) {
+                                    params[key] = value;
+                                }
+                            });
+                            editData(table, 'idIndex', index, params, 'edit');
+                        }else{
+                            deleteForId(table, 'idIndex', index);
+                        }
+                    }
+                }
+                //если в базе данных такой записи нет, то добавляем новую
+                if(noDataId.length > 0){
+                    for(it in noDataId){
+                        console.log(it + '=' + noDataId[it]);
+                        var value = noDataId[it];
                         var params = new Object();
-                        var elem = $('#table' + tableName +' tr:has(select[data-id=' + index +'])');
-
+                        var elem = $('#table' + tableName +' tr:has(select[data-id!="undefined"])');
                         var inputs = elem.find('input[name]');
                         var selected = elem.find('select[name]');
-                        params['id'] = data[item]['id'];
+                        params['id'] = id;
                         inputs.each(function() {
                             var key = $(this).attr('name');
                             var value = $(this).val();
@@ -641,12 +672,21 @@ $(document).ready(function(){
                                 params[key] = value;
                             }
                         });
-                        console.log(params);
-
-                        editData(table, 'idIndex', index, params);
+                        addData(table,  params, 'add');
                     }
-
                 }
+            }
+        });
+    }
+
+    //Удаление строки по id
+    function deleteForId(table, id_name, id){
+        $.ajax({
+            type: "POST",
+            url: "/ServicePartner98/model/ajax.php",
+            dataType: 'json',
+            data: {table : table, id_name : id_name, id: id, action: 'delete'},
+            success: function (data) {
             }
         });
     }
@@ -699,11 +739,11 @@ $(document).ready(function(){
                 }
             });
             if($('#repairHead').text() == 'Новый документ'){
-                addData('repair', params);
+                addData('repair', params, 'add');
             }
             if($('#repairHead').text() == 'Редактирование документа'){
                 var id = $('#typeOfForm').val();
-                editData('repair', 'id', id, params);
+                editData('repair', 'id', id, params, 'edit');
             }
         }
     });
