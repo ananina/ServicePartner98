@@ -33,7 +33,7 @@ class C_Page extends C_Base
     public function action_form_repair (){
         $pageName = $this->params[2];
         $form = $this->params[3];
-        if($form == 0){
+        if($form == 'add'){
             $head = 'Новый документ';
         }else{
             $head = 'Редактирование документа';
