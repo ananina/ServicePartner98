@@ -29,7 +29,7 @@
                             <option value="<?=$value['id_client']?>"><?=$value['client']?></option>
                         <?php } ?>
                         </select>
-                        <button data-name="client" class="btn btn-default btnPlus" data-toggle="modal" data-target="#modal"><span class="glyphicon glyphicon-plus"></span></button>
+                        <button data-name="client" class="btn btn-default btnPlus" title="Добавить" data-toggle="modal" data-target="#modal"><span class="glyphicon glyphicon-plus"></span></button>
                     </p></p>
                     <p>Адрес: <input id="address_client" class="form-control" type="text" disabled></p>
                     <p>Номер телефона: <input id="tel_client" class="form-control" disabled type="text"></p>
@@ -71,14 +71,14 @@
                             <option value="<?=$value['id_type']?>"><?=$value['type']?></option>
                         <?php } ?>
                         </select>
-                        <button data-name="type" class="btn btn-default btnPlus" data-toggle="modal" data-target="#modal"><span class="glyphicon glyphicon-plus"></span></button>
+                        <button data-name="type" class="btn btn-default btnPlus" title="Добавить" data-toggle="modal" data-target="#modal"><span class="glyphicon glyphicon-plus"></span></button>
                     </p></p>
                     <p class="margin0">Производитель <p><select class="form-control select brend" name="id_brend" size="1" required">
                         <?php foreach($brend as $key=>$value){?>
                             <option value="<?=$value['id_brend']?>"><?=$value['brend']?></option>
                         <?php } ?>
                         </select>
-                        <button data-name="brend" class="btn btn-default btnPlus" data-toggle="modal" data-target="#modal"><span class="glyphicon glyphicon-plus"></span></button>
+                        <button data-name="brend" class="btn btn-default btnPlus" title="Добавить" data-toggle="modal" data-target="#modal"><span class="glyphicon glyphicon-plus"></span></button>
                     </p></p>
                     <p>Модель <input class="form-control" type="text" name="model"</p>
                 </div>
