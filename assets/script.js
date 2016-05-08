@@ -384,7 +384,7 @@ $(document).ready(function(){
                 modalPlus.createTable(['Наименование'], {brend: ''});
                 break;
         }
-        modalPlus.changeButton(name);
+        modalPlus.saveButton(name);
     }
 
     //обработка кнопок в справочниках
@@ -487,7 +487,7 @@ $(document).ready(function(){
             }
 
             //добавление класса кнопки Сохранить документ и выполнение добавления в базу при нажатии на кнопку
-            this.changeButton = function(table){
+            this.saveButton = function(table){
                 $('#modal input:submit').addClass('btnSave');
                 $('#modal .btnSave').click(function(event){
                     event.preventDefault();
@@ -509,6 +509,21 @@ $(document).ready(function(){
                     if(validate){
                         addData(table, params, 'add');
                         $('#modal').modal('hide');
+                    }
+                });
+            };
+            this.deleteButton = function(tables, id_name, id) {
+                $('#modal input:submit').addClass('btnDelete');
+                $('#modal .btnDelete').click(function (event) {
+                    event.preventDefault();
+                    for(var n in tables){
+                        console.log(tables[n]);
+                        deleteForId(tables[n], id_name, id);
+                        //завершение всех ajax-запросов
+                        $(document).ajaxStop(function() {
+                            var url = "/ServicePartner98";
+                            $(location).attr('href',url);
+                        });
                     }
                 });
             }
@@ -764,8 +779,8 @@ $(document).ready(function(){
     });
 
     //Обработка событий выбора документа из таблицы на главной странице
-    $('#tableDocuments tr').mousedown(function(){
-        var id = $(this).data('id');
+    $('#tableDocuments tr td:not(:has(button))').mousedown(function(){
+        var id = $(this).parent().data('id');
         var url = "/ServicePartner98/page/form_repair/repair/" + id;
         $(location).attr('href',url);
     });
@@ -774,4 +789,11 @@ $(document).ready(function(){
         loadData('one', 'repair', 'id', id);
     }
 
+    //Удаление документа при нажатии кнопки Удалить
+    $('button[data-name=removeDocument]').click(function(){
+        var id = $(this).closest('tr').data('id');
+        var modalDelete = new Modal('', 'Удаление документа', 'Удалить');
+        modalDelete.createTable(['Вы действительно хотите удалить документ?']);
+        modalDelete.deleteButton(['repair', 'number_materials', 'number_works'], 'id', id);
+    });
 });

@@ -60,7 +60,7 @@
                 <?php }
             }?>
             <td>
-                <button class="btn btn-default btnRemove" data-name="remove" title="Удалить">
+                <button data-name="removeDocument" class="btn btn-default btnRemove" title="Удалить" data-toggle="modal" data-target="#modal">
                     <span class="glyphicon glyphicon-remove"></span>
                 </button>
             </td>
