@@ -301,9 +301,9 @@ $(document).ready(function(){
     function loadMaterials(){
         $('<tr>').appendTo('#tableMaterials');
         $('<td>').appendTo('#tableMaterials tr:last');
-        $('<button>').attr({"data-name":"material", "class":"btn btn-default btnRemove"}).html('<span class="glyphicon glyphicon-remove"></span>').appendTo('#tableMaterials td:last');
+        $('<button>').attr({"data-name":"material", "class":"btn btn-default btnRemove", "title":"Удалить"}).html('<span class="glyphicon glyphicon-remove"></span>').appendTo('#tableMaterials td:last');
         $('<select>').attr('class', 'material').attr('name', 'id_material').appendTo('#tableMaterials td:last');
-        $('<button>').attr({"data-name":"material", "class":"btn btn-default btnPlus", "data-toggle":"modal", "data-target":"#modal"}).html('<span class="glyphicon glyphicon-plus"></span>').appendTo('#tableMaterials td:last');
+        $('<button>').attr({"data-name":"material", "class":"btn btn-default btnPlus", "title":"Добавить", "data-toggle":"modal", "data-target":"#modal"}).html('<span class="glyphicon glyphicon-plus"></span>').appendTo('#tableMaterials td:last');
         $('<td>').appendTo('#tableMaterials tr:last');
         $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'price').attr('disabled', 'disabled').appendTo('#tableMaterials td:last');
         $('<td>').appendTo('#tableMaterials tr:last');
@@ -324,9 +324,9 @@ $(document).ready(function(){
     function loadWorks(){
         $('<tr>').appendTo('#tableWorks');
         $('<td>').appendTo('#tableWorks tr:last');
-        $('<button>').attr({"data-name":"work", "class":"btn btn-default btnRemove"}).html('<span class="glyphicon glyphicon-remove"></span>').appendTo('#tableWorks td:last');
+        $('<button>').attr({"data-name":"work", "class":"btn btn-default btnRemove", "title":"Удалить"}).html('<span class="glyphicon glyphicon-remove"></span>').appendTo('#tableWorks td:last');
         $('<select>').attr('class', 'work').attr('name', 'id_work').appendTo('#tableWorks td:last');
-        $('<button>').attr({"data-name":"work", "class":"btn btn-default btnPlus", "data-toggle":"modal", "data-target":"#modal"}).html('<span class="glyphicon glyphicon-plus"></span>').appendTo('#tableWorks td:last');
+        $('<button>').attr({"data-name":"work", "class":"btn btn-default btnPlus", "title":"Добавить", "data-toggle":"modal", "data-target":"#modal"}).html('<span class="glyphicon glyphicon-plus"></span>').appendTo('#tableWorks td:last');
         $('<td>').appendTo('#tableWorks tr:last');
         $('<input>').attr('class', 'form-control count').attr('type', 'text').attr('name', 'price').attr('disabled', 'disabled').appendTo('#tableWorks td:last');
         $('<td>').appendTo('#tableWorks tr:last');
