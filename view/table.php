@@ -12,6 +12,7 @@
             <td>Модель</td>
             <td>Подразделение</td>
             <td>Мастер</td>
+            <td></td>
         </tr>
     </thead>
 
@@ -58,6 +59,11 @@
                     <td><?=$user['user']?></td>
                 <?php }
             }?>
+            <td>
+                <button class="btn btn-default btnRemove" data-name="remove" title="Удалить">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+            </td>
         </tr>
 <?php } ?>
 </table>
