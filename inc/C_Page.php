@@ -19,7 +19,8 @@ class C_Page extends C_Base
     public function action_index()
     {
         $content = $this->action_get_all();
-        $this->content = $this->template("view/main.php", ['content' => $content]);
+        $modal = $this->template("view/modal.php");
+        $this->content = $this->template("view/main.php", ['content' => $content, 'modal'=>$modal]);
     }
 
     public function action_open(){
