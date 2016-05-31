@@ -134,3 +134,7 @@ div.width470{
 #typeOfForm{
     visibility: hidden;
 }
+#numberError{
+    color: #b94a48;
+    font-size: 12px;
+}
