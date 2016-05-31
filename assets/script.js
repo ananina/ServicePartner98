@@ -60,7 +60,7 @@ $(document).ready(function(){
         var id = $(this).val();
         loadData('one', 'client', 'id_client', id);
     });
-    
+
     //Ajax-запрос из базы данных
     function loadData(count, table, id_name, id){
         $.ajax({
@@ -724,23 +724,6 @@ $(document).ready(function(){
         if($('input[name=number]').val() == ''){
             valid = false;
             $('input[name=number]').addClass('error');
-        }else{
-            //проверка по базе данных наличия документа с таким номером
-            numberData = false;
-            $.ajax({
-                type: "POST",
-                url: "/ServicePartner98/model/ajax.php",
-                async: false,
-                dataType: 'json',
-                data: {count: 'one', table: 'repair', id_name: 'number', id: $('input[name=number]').val()},
-                success: function (data) {
-                    if (data['number']) {
-                        valid = false;
-                        $('input[name=number]').addClass('error');
-                        $('#numberError').text('Документ с таким номером уже существует!');
-                    }
-                }
-            });
         }
 
         //если проверка полей прошла успешно, то документ записывается
@@ -771,7 +754,26 @@ $(document).ready(function(){
                 }
             });
             if($('#repairHead').text() == 'Новый документ'){
-                addData('repair', params, 'add');
+                //проверка по базе данных наличия документа с таким номером
+                numberData = false;
+                $.ajax({
+                    type: "POST",
+                    url: "/ServicePartner98/model/ajax.php",
+                    async: false,
+                    dataType: 'json',
+                    data: {count: 'one', table: 'repair', id_name: 'number', id: $('input[name=number]').val()},
+                    success: function (data) {
+                        if (data['number']) {
+                            numberData = true;
+                            $('input[name=number]').addClass('error');
+                            $('#numberError').text('Документ с таким номером уже существует!');
+                        }
+                    }
+                });
+                
+                if(numberData == false){
+                    addData('repair', params, 'add');
+                }
             }
             if($('#repairHead').text() == 'Редактирование документа'){
                 var id = $('#typeOfForm').val();
