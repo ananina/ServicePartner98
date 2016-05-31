@@ -60,7 +60,7 @@ $(document).ready(function(){
         var id = $(this).val();
         loadData('one', 'client', 'id_client', id);
     });
-
+    
     //Ajax-запрос из базы данных
     function loadData(count, table, id_name, id){
         $.ajax({
@@ -556,7 +556,7 @@ $(document).ready(function(){
                     var inputs;
                     var selected;
                     var tableName = ['Materials', 'Works'];
-                    for(item in tableName){
+                    for(var item in tableName){
                         var parametr = new Object();
                         $('#table' + tableName[item] + ' tr').has('input').each(function(){
                             inputs = $(this).find('input[name]');
@@ -577,7 +577,6 @@ $(document).ready(function(){
                                 }
                             });
                             var saveTable = 'number_' + tableName[item].toLowerCase();
-
                             addData(saveTable, parametr, 'add');
                         });
                     }
@@ -635,7 +634,7 @@ $(document).ready(function(){
                 });
                 //если в базе данных имеются записи
                 if(data){
-                    for(item in data){
+                    for(var item in data){
                         var index = data[item]['idIndex'];
                         if(index in DataId){
                             var params = new Object();
@@ -665,7 +664,7 @@ $(document).ready(function(){
                 }
                 //если в базе данных такой записи нет, то добавляем новую
                 if(noDataId.length > 0){
-                    for(it in noDataId){
+                    for(var it in noDataId){
                         console.log(it + '=' + noDataId[it]);
                         var value = noDataId[it];
                         var params = new Object();
@@ -710,10 +709,6 @@ $(document).ready(function(){
     $('#saveNewDocument').click(function(event){
         event.preventDefault();
         var valid = true;
-        if($('input[name=number]').val() == ''){
-            valid = false;
-            $('input[name=number]').addClass('error');
-        }
         if($('select[name=id_client]').val() == ''){
             valid = false;
             $('select[name=id_client]').prev().prev().addClass('error');
@@ -726,7 +721,29 @@ $(document).ready(function(){
             valid = false;
             $('select[name=id_brend]').prev().prev().addClass('error');
         }
+        if($('input[name=number]').val() == ''){
+            valid = false;
+            $('input[name=number]').addClass('error');
+        }else{
+            //проверка по базе данных наличия документа с таким номером
+            numberData = false;
+            $.ajax({
+                type: "POST",
+                url: "/ServicePartner98/model/ajax.php",
+                async: false,
+                dataType: 'json',
+                data: {count: 'one', table: 'repair', id_name: 'number', id: $('input[name=number]').val()},
+                success: function (data) {
+                    if (data['number']) {
+                        valid = false;
+                        $('input[name=number]').addClass('error');
+                        $('#numberError').text('Документ с таким номером уже существует!');
+                    }
+                }
+            });
+        }
 
+        //если проверка полей прошла успешно, то документ записывается
         if(valid){
             var inputs = $('#repair-data input[name]');
             var textareas = $('#repair-data textarea[name]');
@@ -767,6 +784,7 @@ $(document).ready(function(){
     $('input[name=number]').keyup(function(){
         $('input[name=number]').removeClass('error');
         isInteger($(this));
+        $('#numberError').text('');
     });
     $('select[name=id_client]').change(function(){
         $('select[name=id_client]').prev().prev().removeClass('error');
