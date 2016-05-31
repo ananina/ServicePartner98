@@ -20,6 +20,7 @@
                     </div>
                     </p>
                     <p>Номер: <input id="number" class="form-control" type="text" name="number" value="<?=$number?>" required></p>
+                    <p id="numberError"></p>
                 </fieldset>
 
                 <fieldset id="fieldsetClient">
