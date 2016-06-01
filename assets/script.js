@@ -755,7 +755,6 @@ $(document).ready(function(){
             });
             if($('#repairHead').text() == 'Новый документ'){
                 //проверка по базе данных наличия документа с таким номером
-                numberData = false;
                 $.ajax({
                     type: "POST",
                     url: "/ServicePartner98/model/ajax.php",
@@ -764,16 +763,14 @@ $(document).ready(function(){
                     data: {count: 'one', table: 'repair', id_name: 'number', id: $('input[name=number]').val()},
                     success: function (data) {
                         if (data['number']) {
-                            numberData = true;
                             $('input[name=number]').addClass('error');
                             $('#numberError').text('Документ с таким номером уже существует!');
                         }
+                    },
+                    error: function(){
+                        addData('repair', params, 'add');
                     }
                 });
-                
-                if(numberData == false){
-                    addData('repair', params, 'add');
-                }
             }
             if($('#repairHead').text() == 'Редактирование документа'){
                 var id = $('#typeOfForm').val();
